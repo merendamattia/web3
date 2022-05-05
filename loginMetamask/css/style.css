@@ -1,0 +1,74 @@
+input {
+    border-radius: 5px;
+    height: 30px;
+    width: 50%;
+}
+textarea {
+    border-radius: 5px;
+    width: 50%;
+}
+
+#login {
+    border-radius: 5px;
+    height: 50px;
+    width: 20%;
+    background-color: white;
+    font-size: large;
+    vertical-align: middle;
+}
+
+#upload {
+    border-radius: 5px;
+    height: 50px;
+    width: 40%;
+    background-color: white;
+    font-size: large;
+    vertical-align: middle;
+}
+
+#upload:hover{
+    background-color: lightblue;
+    transition: 0.5s;
+}
+
+#login:hover{
+    background-color: lightsalmon;
+    transition: 0.5s;
+}
+
+#logout{
+    border-radius: 5px;
+    height: 40px;
+    width: 10%;
+    background-color: white;
+    font-size: large;
+    vertical-align: middle;
+}
+
+#logout:hover{
+    background-color: lightcoral;
+    transition: 0.5s;
+}
+
+.container {
+    text-align: center;
+    margin: auto;
+}
+
+img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#auth {
+    border: 2px solid orangered;
+    border-radius: 10px;
+    padding: 20px;;
+    width: 40%;
+    margin: auto;
+}
+
+#image {
+    text-align: center;
+}
+

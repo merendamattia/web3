@@ -5,13 +5,19 @@ Moralis.start({ serverUrl, appId });
 
 changeValue("connection", "Connected - " + Moralis.User.current().get("ethAddress"));
 
-if (!Moralis.User.current()) window.location.replace("./index.html");
+if (!Moralis.User.current()) window.location.replace("../index.html");
 
 logOut = async () => {
     Moralis.User.logOut().then(() => {
     console.log("logged out");
-    window.location.replace("./index.html");
-    });
+    window.location.replace("../index.html");
+    })
+    .catch(function (error) {
+        var str = "<b>Error:</b> " + error.message + "<br>";
+        str += "<b>Code:</b> " + error.code;
+        changeValue("error", str);
+        console.log(error);
+      });
 }
 
 uploadImage = async () => {
@@ -48,7 +54,7 @@ uploadMetadata = async (imageURL) => {
     var res = "<br>IPFS: " + file.ipfs();
     res += "<br>HASH: " + file.hash();
 
-        changeValue("result", res);
+    changeValue("result", res);
 }
     
 
