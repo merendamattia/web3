@@ -2,15 +2,15 @@ init();
 
 /* Authentication code */
 logIn = async () => {
+
     let user = Moralis.User.current();
+
     if (!user) {
         user = await Moralis.authenticate({
-        signingMessage: "Test Log in using Moralis by merendamattia.com",
+            signingMessage: "Test Log in using Moralis by merendamattia.com",
         })
         .then(function (user) {
-            localStorage.setItem('address', user.get("ethAddress"));
-            console.log("Address: " + user.get("ethAddress"));
-            window.location.replace("pages/logged.html");
+            isSigned(user);
         })
         .catch(function (error) {
             var str = "<b>Error:</b> " + error.message + "<br>";
@@ -32,3 +32,25 @@ function init() {
 }
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
+
+isSigned = async (user) =>{
+    if (user) {
+        const Monster = Moralis.Object.extend("Users");
+        const query = new Moralis.Query(Monster);
+
+        query.equalTo("address", user.get("ethAddress"));
+
+        const results = await query.find();
+        alert(results.length);
+
+        localStorage.setItem('address', user.get("ethAddress"));
+        
+        if(results.length !== 0) {
+            
+            window.location.replace("pages/logged.html");
+        }
+        else window.location.replace("pages/signin.html");
+        
+    } 
+    else alert("Metamask not connected!!")
+}

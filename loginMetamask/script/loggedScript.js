@@ -50,39 +50,11 @@ uploadMetadata = async (imageURL) => {
     changeValue("result", res);
 }
     
-
 uploadAll = async () => {
     changeValue("result", "Uploading... please wait!");
     const image = await uploadImage();
     await uploadMetadata(image);
 }
-
-    /**
-     * ToDo
-     */
-    /*async function go() {//<button id="btn-go">go</button>
-        const currentUser = Moralis.User.current();
-        
-        if (currentUser) {
-            console.log("Address: " + currentUser.get("ethAddress"));
-        
-            const first = new Moralis.Query("test1");
-            first.equalTo("address", currentUser.get("ethAddress"));
-            first.find().then(function (connections){
-            const count = first.get("text");
-            alert(connections.get("text"));
-            //link tutorial - https://youtu.be/2CaHZhgtsZc
-            })
-            .catch(function (error){
-            alert("Non trovato");
-            });
-
-        } else {
-        alert("Metamask not connected!!")
-        }
-    }
-    //document.getElementById("btn-go").onclick = go;
-        */
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
@@ -103,3 +75,62 @@ function init() {
     
     if (!Moralis.User.current()) window.location.replace("../index.html");
 }
+
+// ---------------------------- Sviluppo
+
+/**
+ * Effettua una query
+ * Ritorna i record che hanno l'address uguale
+ */
+ async function go() {
+    // doc: https://docs.moralis.io/moralis-dapp/database/queries
+    const currentUser = Moralis.User.current();
+        
+    if (currentUser) {
+         console.log("Address: " + currentUser.get("ethAddress"));
+            
+        const Monster = Moralis.Object.extend("test1");
+        const query = new Moralis.Query(Monster);
+
+        query.equalTo("address", currentUser.get("ethAddress"));
+
+        const results = await query.find();
+        
+        alert("Successfully retrieved " + results.length + " monsters.");
+        
+        // Do something with the returned Moralis.Object values
+        
+        for (let i = 0; i < results.length; i++) {
+            const object = results[i];
+            alert(object.id + " - " + object.get("text"));
+        }
+
+    } else {
+        alert("Metamask not connected!!")
+    }
+}
+document.getElementById("go").onclick = go;
+
+
+async function add() {
+    const Monster = Moralis.Object.extend("test1");
+    const monster = new Monster();
+
+    monster.set("linkIPFS", "scemo chi legge");
+    monster.set("address", Moralis.User.current().get("ethAddress"));
+    monster.set("text", "questa è una provola");
+
+    monster.save().then(
+        (monster) => {
+            // Execute any logic that should take place after the object is saved.
+            alert("New object created with objectId: " + monster.id);
+        },
+        (error) => {
+            // Execute any logic that should take place if the save fails.
+            // error is a Moralis.Error with an error code and message.
+            alert("Failed to create new object, with error code: " + error.message);
+        }
+    );
+}
+
+document.getElementById("add").onclick = add;
