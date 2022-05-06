@@ -1,11 +1,4 @@
-/* Moralis init code */
-const serverUrl = "https://kpzk5mc6vpt0.usemoralis.com:2053/server";
-const appId = "ubDzdHNV8MsCnI8Dsp0Vai6ZwzmZyRHq2dhZpd2d";
-Moralis.start({ serverUrl, appId });
-
-changeValue("connection", "Connected - " + Moralis.User.current().get("ethAddress"));
-
-if (!Moralis.User.current()) window.location.replace("../index.html");
+init();
 
 logOut = async () => {
     Moralis.User.logOut().then(() => {
@@ -95,3 +88,18 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
 
 document.getElementById("logout").onclick = logOut;
 document.getElementById("upload").onclick = uploadAll;
+
+function init() { 
+    const serverUrl = "https://kpzk5mc6vpt0.usemoralis.com:2053/server";
+    const appId = "ubDzdHNV8MsCnI8Dsp0Vai6ZwzmZyRHq2dhZpd2d";
+    Moralis.start({ serverUrl, appId });
+
+    if(localStorage.getItem('address') === Moralis.User.current().get("ethAddress"))
+        changeValue("connection", "Connected - " + Moralis.User.current().get("ethAddress"));
+    else {
+        delete localStorage.address;
+        window.location.replace("../index.html")
+    }
+    
+    if (!Moralis.User.current()) window.location.replace("../index.html");
+}
