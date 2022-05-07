@@ -3,11 +3,9 @@ init();
 signIn = async () => {
 
     let user = Moralis.User.current();
-    console.log(user);
-
-    
-        console.log("in");
-        user = await Moralis.authenticate({
+    //console.log(user);
+    add(user);/*
+        var user = await Moralis.authenticate({
             signingMessage: "Please confirm your subscription! Made by merendamattia.com",
         })
         .then(function (user) {
@@ -18,8 +16,9 @@ signIn = async () => {
             str += "<b>Code:</b> " + error.code;
             changeValue("error", str);
             console.log(error);
+            add(Moralis.User.current());
         });
-    
+    */
 }
 
 document.getElementById("signIn").onclick = signIn;
@@ -35,22 +34,22 @@ function init() {
 function add(user) {
     const Monster = Moralis.Object.extend("Users");
     const monster = new Monster();
-
-    monster.set("name", document.getElementById("name"));
+    
     monster.set("address", user.get("ethAddress"));
+    monster.set("name", document.getElementById("name"));
 
     monster.save().then(
         (monster) => {
             // Execute any logic that should take place after the object is saved.
-            //alert("New object created with objectId: " + monster.id);
+            alert("New object created with objectId: " + monster.id);
             changeValue("result", "Account registrato!");
-            
+        
         },
         (error) => {
             // Execute any logic that should take place if the save fails.
             // error is a Moralis.Error with an error code and message.
             changeValue("error", error.message);
-            //alert("Failed to create new object, with error code: " + error.message);
+            alert("Failed to create new object, with error code: " + error.message);
         }
     );
 }

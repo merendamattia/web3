@@ -45,12 +45,8 @@ isSigned = async (user) =>{
 
         localStorage.setItem('address', user.get("ethAddress"));
         
-        if(results.length !== 0) {
-            
-            window.location.replace("pages/logged.html");
-        }
+        if(results.length !== 0) window.location.replace("pages/logged.html");
         else window.location.replace("pages/signin.html");
-        
     } 
     else alert("Metamask not connected!!")
 }
