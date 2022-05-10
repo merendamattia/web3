@@ -1,33 +1,83 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>First Dapp!!</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>aaaa</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/navbar-fixed/">
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
     <script src="https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.7.1/web3-provider.min.js"></script>
-  </head>
+  
+    
 
+    <!-- Bootstrap core CSS -->
+<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="./css/navbar-top-fixed.css" rel="stylesheet">
+  </head>
   <body>
 
-      <h1>Login con WalletConnect</h1>
-      <h3>Realizzato da merendamattia.com</h3>
-      
-      <button id="login_button">Login</button>
-      <button id="logout_button">Logout</button>
+<main class="container">
+  <div class="bg-light p-5 rounded">
+    <h1>Benvenuto!</h1>
+      <div id = "isNotSigned">
+        <p>Sembra che tu non sia registrato. 
+          Per registrarti inserisci il tuo username e salva.
+        </p>
+        <div class="row g-3">
+          <div class="col-auto">
+            <label for="inputPassword2" class="visually-hidden">Username</label>
+            <input type="text" class="form-control" id="name" placeholder="Username">
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-success mb-3" onclick = "addAccount()">Salva!</button>
+          </div>
+        </div>
+        </div>
 
       <div id = "content">
         <p>
             ciaooooooooo!!!! Utente loggato
         </p>
-
-        <p id ="address"></p>
+        <p id = "username"></p>
+        <p>Address: <span id = "address"></span></p>
         <p id ="result"></p>
       </div>
-
+      <div class="d-grid gap-2 col-2 mx-auto">
+        <button id="login_button" class="btn btn-primary btn-lg">Login</button>
+        <button id="logout_button" class="btn btn-danger btn-lg">Logout</button>
+      </div>
       <p id ="error"></p>
       <p id = "session"></p>
-      
-    <script type="text/javascript" src="./main.js"></script>
-  </body>
 
+  </div>
+</main>
+
+    <script type="text/javascript" src="./main.js"></script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+
+      
+  </body>
 </html>
