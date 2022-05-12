@@ -3,11 +3,17 @@ const serverUrl = "https://wtj1tfll0vpn.usemoralis.com:2053/server";
 const appId = "Tqz949shXNdR4jZ24NBBYCYX0pOW8Ipuxsg4Kf1l";
 Moralis.start({ serverUrl, appId });
 
+function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
+
+if (typeof window.ethereum === 'undefined') {
+    alert('MetaMask is not installed!');
+    changeValue("error", "MetaMask is not installed! Please install it!")
+}
 
 console.log("user: ");
 console.log(Moralis.User.current());
 
-function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
+
 
 /* LOGOUT */
 logOut = async () => {
@@ -38,7 +44,6 @@ logIn = async () => {
                   "pillar",
                 ] 
             }).then(function (user){
-                alert("ciao");
                 checkUser();
                 location.reload();
             }).catch(function (error) {
@@ -51,7 +56,7 @@ logIn = async () => {
                 signingMessage: "Login by merendamattia.com (desktop login)",
             }).then(function (user){
                 checkUser();
-                location.reload();
+                //location.reload();
             }).catch(function (error) {
                 changeValue("error", "<b>Error:</b> " + error.message + "<br><b>Code:</b> " + error.code);
                 console.log(error);
@@ -77,19 +82,50 @@ isSigned = async (user) =>{
     else alert("Metamask not connected!!");
 }
 
+hasUploadedFiles = async (user) =>{
+    if (user) {
+        const Monster = Moralis.Object.extend("USER_IPFS");
+        const query = new Moralis.Query(Monster);
+
+        query.equalTo("address", user.get("ethAddress"));
+
+        const results = await query.find();
+        //alert(results.length);
+
+        if(results.length !== 0) {
+            document.getElementById("IPFS_content").style.display = "block";
+
+            let str = "";
+
+            for (let i = 0; i < results.length; i++) {
+                const object = results[i];
+                //alert(object.id + " - " + object.get("text"));
+                str += ((i + 1) + ") " + object.get("link_ipfs") + "<br>");
+            }
+            changeValue("getRecords", str);
+        }
+        else document.getElementById("IPFS_content").style.display = "none";
+    } 
+    else alert("Metamask not connected!!");
+}
+
 /**
  * Controlla se l'utente è loggato o no
  */
 function checkUser(){
     let user = Moralis.User.current();
 
+    document.getElementById("isNotSigned").style.display = "none";
+
     if(user){
+        hasUploadedFiles(user);
         isSigned(user);
         document.getElementById("login_button").style.display = "none";
         document.getElementById("logout_button").style.display = "block";
         document.getElementById("content").style.display = "block";
         changeValue("address", user.get("ethAddress"));
         getUsername(user);
+        changeValue("title", "Bentornato!!");
     } else {
         document.getElementById("login_button").style.display = "block";
         document.getElementById("logout_button").style.display = "none";
