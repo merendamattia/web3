@@ -1,4 +1,4 @@
-function addLinkToDB(imgName, imgDescription, imgHash, link, hash){
+function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     let user = Moralis.User.current();
 
     const Monster = Moralis.Object.extend("USER_IPFS");
@@ -10,6 +10,7 @@ function addLinkToDB(imgName, imgDescription, imgHash, link, hash){
     monster.set("ImgName", imgName);
     monster.set("ImgDescription", imgDescription);
     monster.set("ImgHash", imgHash);
+    monster.set("fileType", fileType);
 
     monster.save().then(
         (monster) => {
@@ -42,6 +43,7 @@ uploadImage = async () => {
 uploadMetadata = async (imageHash) => {
     const nameImg = document.getElementById("nameImg").value;
     const description = document.getElementById("description").value;
+    const fileType = document.getElementById("fileType").value;
 
     const metadata = {
         "name": nameImg,
@@ -61,7 +63,7 @@ uploadMetadata = async (imageHash) => {
 
     console.log(file.ipfs(), file.hash());
     
-    addLinkToDB(nameImg, description, imageHash, file.ipfs(), file.hash());
+    addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash());
 
     var res = "Immagine caricata! Aggiornare la pagina";
     // var res = "<br>IPFS: <a href = '" + file.ipfs() + "' target = '_blank'>link</a>";

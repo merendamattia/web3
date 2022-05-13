@@ -98,14 +98,22 @@
             <hr>
             <div class = "col-2 mx-auto w-50">
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Upload immagini con IPFS</label>
-                <input type="text" class="form-control" name="nameImg" id="nameImg" placeholder="Nome immagine">
+                <label for="exampleFormControlInput1" class="form-label">Upload files con IPFS</label>
+                <input type="text" class="form-control" name="nameImg" id="nameImg" placeholder="Nome">
               </div>
               <div class="mb-3">
-                <textarea class="form-control" name="description" id="description" rows="3" placeholder="Descrizione immagine"></textarea>
-              </div>            
+                <textarea class="form-control" name="description" id="description" rows="3" placeholder="Descrizione"></textarea>
+              </div>
               <div class="mb-3">
-                <label for="formFile" class="form-label">Seleziona immagine</label>
+                <select class="form-select" aria-label="Tipo" id = "fileType">
+                  <option selected>Tipo</option>
+                  <option value="Immagine">Immagine</option>
+                  <option value="Video">Video</option>
+                  <option value="Testo">File di testo</option>
+                  <option value="Altro">Altro</option>
+                </select>   
+              </div>        
+              <div class="mb-3">
                 <input class="form-control" type="file" id="image" name="image">
               </div>
               <button type="button" class="btn btn-warning btn-lg" id="upload">
