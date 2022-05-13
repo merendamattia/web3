@@ -5,11 +5,6 @@ Moralis.start({ serverUrl, appId });
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
-if (typeof window.ethereum === 'undefined') {
-    alert('MetaMask is not installed!');
-    changeValue("error", "MetaMask is not installed! Please install it!")
-}
-
 console.log("user: ");
 console.log(Moralis.User.current());
 
@@ -43,7 +38,7 @@ logIn = async () => {
                 ] 
             }).then(function (user){
                 checkUser();
-                location.reload();
+                //location.reload();
             }).catch(function (error) {
                 changeValue("error", "<b>Error:</b> " + error.message + "<br><b>Code:</b> " + error.code);
                 console.log(error);
@@ -106,6 +101,7 @@ hasUploadedFiles = async (user) =>{
             document.getElementById("IPFS_content").style.display = "block";
 
             let str = "";
+            var table = "<table class='table'><thead><tr><th scope='col'>#</th><th scope='col'>Nome</th><th scope='col'>Descrizione</th><th scope='col'>Immagine</th><th scope='col'>json</th></tr></thead><tbody>";
 
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
@@ -113,17 +109,17 @@ hasUploadedFiles = async (user) =>{
 
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
 
-                var json = "'name': " + object.get("ImgName") + ", ";
-                json += "'description': " + object.get("ImgDescription") + ", ";
-                //json += "'image': <a href = '" + linkImg + "' download = '" + object.get("ImgName") + "'><img style = 'width: 10%;' src = '" + linkImg + "'></a>";
-                json += "'image': <a href = 'dnslink=/ipfs/" + object.get("ImgHash") + "' download = '" + object.get("ImgName") + "'><img style = 'width: 10%;' src = '" + linkImg + "'></a>";
-                json += "link obj ipfs: <a href = '" + getLinkIpfs(object.get("hash_ipfs")) + "'>link</a>";
-                
+                table += "<tr><th scope='row'>" + (i + 1) + "</th>";
+                table += "<td>" + object.get("ImgName") + "</td>";
+                table += "<td>" + object.get("ImgDescription") + "</td>";
+                table += "<td><a href = '" + linkImg + "' target = '_blank'><img style = 'width: 30px;' src = '" + linkImg + "'></a></td>";
+                table += "<td><a href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>link</a></td>";
+                table += "</tr>"
 
-                str += ((i + 1) + ") " + json + "<br>");
-                console.log(json);
+                //console.log(table);
             }
-            changeValue("getRecords", str);
+            table += "</tbody></table>";
+            changeValue("getRecords", table);
         }
         else document.getElementById("IPFS_content").style.display = "none";
     } 
@@ -140,7 +136,7 @@ function checkUser(){
 
     if(user){
         hasUploadedFiles(user);
-        isSigned(user);
+        //isSigned(user);
         document.getElementById("login_button").style.display = "none";
         document.getElementById("logout_button").style.display = "block";
         document.getElementById("content").style.display = "block";

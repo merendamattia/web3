@@ -41,8 +41,10 @@
     <main class="container">
       <div class="bg-light p-5 rounded">
         <h1 id = "title">Benvenuto!</h1>
+          
+         
           <div id = "isNotSigned">
-            <p>Sembra che tu non sia registrato. 
+            <!--<p>Sembra che tu non sia registrato. 
               Per registrarti inserisci il tuo username e salva.
             </p>
             <div class="row g-3">
@@ -59,9 +61,9 @@
                   Salva!
                 </button>
               </div>
-            </div>
-            </div>
-
+            </div>-->
+          </div>
+        
             <button id="login_button" class="btn btn-primary btn-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 20 19">
                 <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
@@ -70,12 +72,17 @@
               Login
             </button>
 
+<!-- Contentenuto utente loggato -->
         <div id = "content">
             <p>
-                Utente loggato. Ciaooo! Questa è la sezione privata del mio sito
+                Ciaooo! <br>
+                Questa è la sezione privata del mio sito in cui potrai salvare tutto 
+                il materiale che vuoi senza vincoli di spazio!!<br>
+                Tutto questo è possibile grazie al protocollo IPFS.
             </p>
-            <p id = "username"></p> 
+            <!--<p id = "username"></p> -->
             <p>Address: <span id = "address"></span></p>
+<!-- --------------------------- -->
 
 <!-- YOUR DATA from IPFS -->
             <div id = "IPFS_content">
@@ -130,7 +137,7 @@
           <p id = "session"></p>
     </main>
     
-    <script type="text/javascript" src="./main.js"></script>
+    <script type="text/javascript" src="./scripts/main.js"></script>
     <script type="text/javascript" src="./scripts/uploadFile.js"></script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>    
   </body>
