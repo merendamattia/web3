@@ -117,6 +117,7 @@ hasUploadedFiles = async (user) =>{
                 json += "'description': " + object.get("ImgDescription") + ", ";
                 //json += "'image': <a href = '" + linkImg + "' download = '" + object.get("ImgName") + "'><img style = 'width: 10%;' src = '" + linkImg + "'></a>";
                 json += "'image': <a href = 'dnslink=/ipfs/" + object.get("ImgHash") + "' download = '" + object.get("ImgName") + "'><img style = 'width: 10%;' src = '" + linkImg + "'></a>";
+                json += "link obj ipfs: <a href = '" + getLinkIpfs(object.get("hash_ipfs")) + "'>link</a>";
                 
 
                 str += ((i + 1) + ") " + json + "<br>");
