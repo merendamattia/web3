@@ -13,8 +13,6 @@ if (typeof window.ethereum === 'undefined') {
 console.log("user: ");
 console.log(Moralis.User.current());
 
-
-
 /* LOGOUT */
 logOut = async () => {
     Moralis.User.logOut();
@@ -82,6 +80,18 @@ isSigned = async (user) =>{
     else alert("Metamask not connected!!");
 }
 
+async function fetchIPFSDoc(ipfsHash) {
+    const url = "https://gateway.moralisipfs.com/ipfs/" + ipfsHash;
+    console.log("url: " + url);
+    const response = await fetch(url);
+    return await response.json();
+}
+
+function getLinkIpfs(hash){
+    var url = "https://gateway.moralisipfs.com/ipfs/" + hash;
+    return url;
+}
+
 hasUploadedFiles = async (user) =>{
     if (user) {
         const Monster = Moralis.Object.extend("USER_IPFS");
@@ -100,7 +110,17 @@ hasUploadedFiles = async (user) =>{
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
                 //alert(object.id + " - " + object.get("text"));
-                str += ((i + 1) + ") " + object.get("link_ipfs") + "<br>");
+
+                var linkImg = getLinkIpfs(object.get("ImgHash"));
+
+                var json = "'name': " + object.get("ImgName") + ", ";
+                json += "'description': " + object.get("ImgDescription") + ", ";
+                //json += "'image': <a href = '" + linkImg + "' download = '" + object.get("ImgName") + "'><img style = 'width: 10%;' src = '" + linkImg + "'></a>";
+                json += "'image': <a href = 'dnslink=/ipfs/" + object.get("ImgHash") + "' download = '" + object.get("ImgName") + "'><img style = 'width: 10%;' src = '" + linkImg + "'></a>";
+                
+
+                str += ((i + 1) + ") " + json + "<br>");
+                console.log(json);
             }
             changeValue("getRecords", str);
         }

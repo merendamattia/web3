@@ -1,4 +1,4 @@
-function addLinkToDB(link, hash){
+function addLinkToDB(imgName, imgDescription, imgHash, link, hash){
     let user = Moralis.User.current();
 
     const Monster = Moralis.Object.extend("USER_IPFS");
@@ -7,6 +7,9 @@ function addLinkToDB(link, hash){
     monster.set("address", user.get("ethAddress"));
     monster.set("link_ipfs", link);
     monster.set("hash_ipfs", hash);
+    monster.set("ImgName", imgName);
+    monster.set("ImgDescription", imgDescription);
+    monster.set("ImgHash", imgHash);
 
     monster.save().then(
         (monster) => {
@@ -33,17 +36,17 @@ uploadImage = async () => {
 
     console.log(file.ipfs(), file.hash())
 
-    return file.ipfs();
+    return file.hash();
 }
 
-uploadMetadata = async (imageURL) => {
-    const name = document.getElementById("name").value;
+uploadMetadata = async (imageHash) => {
+    const nameImg = document.getElementById("nameImg").value;
     const description = document.getElementById("description").value;
 
     const metadata = {
-        "name": name,
+        "name": nameImg,
         "description": description,
-        "image": imageURL
+        "image": "https://gateway.moralisipfs.com/ipfs/" + imageHash
     };
 
     //changeValue("result", new String(metadata));
@@ -52,14 +55,17 @@ uploadMetadata = async (imageURL) => {
         base64: btoa(JSON.stringify(metadata)),
     });
 
+    console.log(file);
+
     await file.saveIPFS();
 
     console.log(file.ipfs(), file.hash());
     
-    addLinkToDB(file.ipfs(), file.hash());
+    addLinkToDB(nameImg, description, imageHash, file.ipfs(), file.hash());
 
-    var res = "<br>IPFS: <a href = '" + file.ipfs() + "' target = '_blank'>link</a>";
-    res += "<br>HASH: " + file.hash();
+    var res = "Immagine caricata! Aggiornare la pagina";
+    // var res = "<br>IPFS: <a href = '" + file.ipfs() + "' target = '_blank'>link</a>";
+    // res += "<br>HASH: " + file.hash();
 
     changeValue("result", res);
 }
