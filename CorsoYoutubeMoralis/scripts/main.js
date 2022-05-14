@@ -117,9 +117,13 @@ hasUploadedFiles = async (user) =>{
                     table += "<td><a href = '" + linkImg + "' target = '_blank'><img style = 'width: 30px;' src = '" + linkImg + "'></a></td>";
                 else if(object.get("fileType") === 'Audio')
                     table += "<td><a href = '" + linkImg + "' target = '_blank'>🎵</a></td>";
+                else if(object.get("fileType") === 'Video')
+                    table += "<td><a href = '" + linkImg + "' target = '_blank'>🎥</a></td>";
+                else if(object.get("fileType") === 'Testo')
+                    table += "<td><a href = '" + linkImg + "' target = '_blank'>📚</a></td>";
                 else
                     table += "<td><a href = '" + linkImg + "' target = '_blank'>link</a></td>";
-                table += "<td><a href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>link</a></td>";
+                table += "<td><a href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>⚙️</a></td>";
                 table += "</tr>"
 
                 //console.log(table);
@@ -148,7 +152,7 @@ function checkUser(){
         document.getElementById("content").style.display = "block";
         changeValue("address", user.get("ethAddress"));
         getUsername(user);
-        changeValue("title", "Bentornato!!");
+        changeValue("title", "Bentornato!! 😄");
     } else {
         document.getElementById("login_button").style.display = "block";
         document.getElementById("logout_button").style.display = "none";

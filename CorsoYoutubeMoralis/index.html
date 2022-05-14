@@ -32,6 +32,9 @@
           width: 100%;
         }
       }
+      a {
+        text-decoration: none;
+      }
     </style>
 
     <!-- Custom styles for this template -->
@@ -74,8 +77,8 @@
             <p>
                 Ciaooo! <br>
                 Questa è la sezione privata del mio sito in cui potrai salvare tutto 
-                il materiale che vuoi senza vincoli di spazio!!<br>
-                Tutto questo è possibile grazie al protocollo IPFS.
+                il materiale che vuoi senza vincoli di spazio!! 🚀<br>
+                Tutto questo è possibile grazie al protocollo IPFS! 🌍
             </p>
             <!--<p id = "username"></p> -->
             <p>Address: <span id = "address"></span></p>
@@ -92,17 +95,18 @@
 <!-- ------------------- -->
             
 <!-- INPUT IPFS -->
-            <hr>
+            <hr> 
+            <h4>Upload files con IPFS</h4>
             <div class = "col-2 mx-auto w-50">
+             
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Upload files con IPFS</label>
-                <input type="text" class="form-control" name="nameImg" id="nameImg" placeholder="Nome">
+                <input type="text" class="form-control" name="nameImg" id="nameImg" placeholder="Nome" required>
               </div>
               <div class="mb-3">
                 <textarea class="form-control" name="description" id="description" rows="3" placeholder="Descrizione"></textarea>
               </div>
               <div class="mb-3">
-                <select class="form-select" aria-label="Tipo" id = "fileType">
+                <select class="form-select" aria-label="Tipo" id = "fileType" required>
                   <option selected>Tipo</option>
                   <option value="Immagine">Immagine</option>
                   <option value="Video">Video</option>
@@ -112,7 +116,7 @@
                 </select>   
               </div>        
               <div class="mb-3">
-                <input class="form-control" type="file" id="image" name="image">
+                <input class="form-control" type="file" id="image" name="image" required>
               </div>
               <button type="button" class="btn btn-warning btn-lg" id="upload">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-upload" viewBox="0 0 20 19">
