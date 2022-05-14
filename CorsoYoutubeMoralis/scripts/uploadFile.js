@@ -48,7 +48,7 @@ uploadMetadata = async (imageHash) => {
     const metadata = {
         "name": nameImg,
         "description": description,
-        "image": "https://gateway.moralisipfs.com/ipfs/" + imageHash
+        "file": "https://gateway.moralisipfs.com/ipfs/" + imageHash
     };
 
     //changeValue("result", new String(metadata));
@@ -65,7 +65,7 @@ uploadMetadata = async (imageHash) => {
     
     addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash());
 
-    var res = "Immagine caricata! Aggiornare la pagina";
+    var res = "File caricato! Aggiornare la pagina";
     // var res = "<br>IPFS: <a href = '" + file.ipfs() + "' target = '_blank'>link</a>";
     // res += "<br>HASH: " + file.hash();
 
