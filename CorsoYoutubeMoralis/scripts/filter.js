@@ -4,6 +4,9 @@ async function filter(){
     let user = Moralis.User.current();
     
     const tipo = document.getElementById("filterSelect").value;
+
+    if(tipo === "reset")
+        location.reload();
     
     query.equalTo("address", user.get("ethAddress")).equalTo("fileType", tipo);
 

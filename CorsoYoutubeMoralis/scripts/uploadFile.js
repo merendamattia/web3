@@ -71,8 +71,10 @@ uploadMetadata = async (imageHash) => {
 uploadAll = async () => {
     const fileInput = document.getElementById("image");
 
+    const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
+
     if(fileInput.files.length != 0){
-        changeValue("result", "Uploading... please wait!");
+        changeValue("result", loadGif);
         const image = await uploadImage();
         await uploadMetadata(image);
     } else {
