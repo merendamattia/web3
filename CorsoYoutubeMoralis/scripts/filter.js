@@ -10,21 +10,28 @@ async function filter(){
     const results = await query.find();
     //alert(results.length);
 
-        if(results.length !== 0) {
-            document.getElementById("IPFS_content").style.display = "block";
+    if(results.length !== 0) {
+        document.getElementById("IPFS_content").style.display = "block";
 
-            let str = "";
-            var table = "<table class='table'><thead><tr><th scope='col'>#</th><th scope='col'>Nome</th><th scope='col'>Descrizione</th><th scope='col'>Tipo</th><th scope='col'>File</th><th scope='col'>Json Obj</th></tr></thead><tbody>";
+        let str = "";
+            
+        var table = "<table class='table'><thead>";
+        table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
+        table += "<th scope='col'>Descrizione</th><th scope='col'>Ultima modifica</th>";
+        table += "<th scope='col'>Tipo</th>";
+        table += "<th scope='col'>File</th><th scope='col'>Json Obj</th>";
+        table += "</tr></thead><tbody>";
 
-            for (let i = 0; i < results.length; i++) {
-                const object = results[i];
-                //alert(object.id + " - " + object.get("text"));
+        for (let i = 0; i < results.length; i++) {
+            const object = results[i];
+            //alert(object.id + " - " + object.get("text"));
 
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
 
                 table += "<tr><th scope='row'>" + (i + 1) + "</th>";
                 table += "<td>" + object.get("ImgName") + "</td>";
                 table += "<td>" + object.get("ImgDescription") + "</td>";
+                table += "<td>" + object.get("updatedAt").toString().substring(0, 25) + "</td>";
                 table += "<td>" + object.get("fileType") + "</td>";
                 if(object.get("fileType") === 'Immagine')
                     table += "<td><a href = '" + linkImg + "' target = '_blank'><img style = 'width: 30px;' src = '" + linkImg + "'></a></td>";
@@ -43,5 +50,6 @@ async function filter(){
             }
             table += "</tbody></table><br>";
             changeValue("getRecords", table);
-        }
+        } else alert("Nessun risultato trovato! 😔")
+        
 }

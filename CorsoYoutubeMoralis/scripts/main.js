@@ -98,7 +98,12 @@ hasUploadedFiles = async (user) =>{
             document.getElementById("IPFS_content").style.display = "block";
 
             let str = "";
-            var table = "<table class='table'><thead><tr><th scope='col'>#</th><th scope='col'>Nome</th><th scope='col'>Descrizione</th><th scope='col'>Tipo</th><th scope='col'>File</th><th scope='col'>Json Obj</th></tr></thead><tbody>";
+            var table = "<table class='table'><thead>";
+            table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
+            table += "<th scope='col'>Descrizione</th><th scope='col'>Ultima modifica</th>";
+            table += "<th scope='col'>Tipo</th>";
+            table += "<th scope='col'>File</th><th scope='col'>Json Obj</th>";
+            table += "</tr></thead><tbody>";
 
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
@@ -109,6 +114,7 @@ hasUploadedFiles = async (user) =>{
                 table += "<tr><th scope='row'>" + (i + 1) + "</th>";
                 table += "<td>" + object.get("ImgName") + "</td>";
                 table += "<td>" + object.get("ImgDescription") + "</td>";
+                table += "<td>" + object.get("updatedAt").toString().substring(0, 25) + "</td>";
                 table += "<td>" + object.get("fileType") + "</td>";
                 if(object.get("fileType") === 'Immagine')
                     table += "<td><a href = '" + linkImg + "' target = '_blank'><img style = 'width: 30px;' src = '" + linkImg + "'></a></td>";

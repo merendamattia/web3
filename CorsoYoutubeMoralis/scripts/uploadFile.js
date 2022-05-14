@@ -15,15 +15,11 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     monster.save().then(
         (monster) => {
             // Execute any logic that should take place after the object is saved.
-            alert("File caricato: " + monster.id);
-            //window.location.replace("index.html");
+            alert("File caricato!! 🥳");
+            location.reload();
         },
         (error) => {
-            // Execute any logic that should take place if the save fails.
-            // error is a Moralis.Error with an error code and message.
-            //changeValue("result", "Errore: Account non registrato!");
-            //changeValue("error", error.message);
-            alert("Failed to create new object, with error code: " + error.message);
+            alert("Errore nel caricamento del file. Riprovare. 😢");
         }
     );
 }
@@ -73,9 +69,16 @@ uploadMetadata = async (imageHash) => {
 }
     
 uploadAll = async () => {
-    changeValue("result", "Uploading... please wait!");
-    const image = await uploadImage();
-    await uploadMetadata(image);
+    const fileInput = document.getElementById("image");
+
+    if(fileInput.files.length != 0){
+        changeValue("result", "Uploading... please wait!");
+        const image = await uploadImage();
+        await uploadMetadata(image);
+    } else {
+        changeValue("result", "Selezionare un file!!");
+    }
+    
 }
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
