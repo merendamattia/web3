@@ -153,12 +153,14 @@ function checkUser(){
         document.getElementById("login_button").style.display = "none";
         document.getElementById("logout_button").style.display = "block";
         document.getElementById("content").style.display = "block";
+        document.getElementById("profile").style.display = "block";
         changeValue("address", user.get("ethAddress"));
         getProfileData(user);
         changeValue("title", "Bentornato!! 😄");
     } else {
         document.getElementById("login_button").style.display = "block";
         document.getElementById("logout_button").style.display = "none";
+        document.getElementById("profile").style.display = "none";
         document.getElementById("content").style.display = "none";
         document.getElementById("isNotSigned").style.display = "none";
     }
