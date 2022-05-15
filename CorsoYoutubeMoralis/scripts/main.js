@@ -154,7 +154,7 @@ function checkUser(){
         document.getElementById("logout_button").style.display = "block";
         document.getElementById("content").style.display = "block";
         changeValue("address", user.get("ethAddress"));
-        getUsername(user);
+        getProfileData(user);
         changeValue("title", "Bentornato!! 😄");
     } else {
         document.getElementById("login_button").style.display = "block";
@@ -186,16 +186,26 @@ function addAccount(){
     window.location.replace("./pages/addAccount.html");
 }
 
-async function getUsername(user){
-    const Monster = Moralis.Object.extend("USER_SIGNED");
+async function getProfileData(user){
+    const Monster = Moralis.Object.extend("USER_PHOTO");
     const query = new Moralis.Query(Monster);
 
     query.equalTo("address", user.get("ethAddress"));
 
     const results = await query.find();
         
-    for (let i = 0; i < results.length; i++) {
-        const object = results[i];
-        changeValue("username", "Username: " + object.get("username"));
+    
+    const object = results[0];
+    var ris = "";
+
+    if(object.get("image_hash") !== 'undefined'){
+        var linkImg = getLinkIpfs(object.get("image_hash"));
+        ris += "<img style = 'width: 100px; height: 100px; border-radius: 50px;' src = '" + linkImg + "' alt='Foto profilo'>";
     }
+    
+    if(object.get("username") !== 'undefined')
+        ris += "<p>" + object.get("username") + "</p>";
+
+    changeValue("profileData", ris);
+    
 }

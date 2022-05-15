@@ -1,3 +1,5 @@
+function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
+
 function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     let user = Moralis.User.current();
 
@@ -11,6 +13,7 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     monster.set("ImgDescription", imgDescription);
     monster.set("ImgHash", imgHash);
     monster.set("fileType", fileType);
+    monster.setACL(new Moralis.ACL(Moralis.User.current()));
 
     monster.save().then(
         (monster) => {
@@ -67,9 +70,47 @@ uploadMetadata = async (imageHash) => {
 
     changeValue("result", res);
 }
+
+async function checkIfExist(){
+    const data = image.files[0];
+    const file = new Moralis.File(data.name, data);
+    await file.saveIPFS();
+
+    let user = Moralis.User.current();
+
+    const Monster = Moralis.Object.extend("USER_PHOTO");
+    const query = new Moralis.Query(Monster);
+
+    query.equalTo("address", user.get("ethAddress"));
+
+    const results = await query.find();
+        //alert(results.length);
+
+    if(results.length === 0) {
+    
+        const monster = new Monster();
+                    
+        monster.set("address", user.get("ethAddress"));   
+        monster.setACL(new Moralis.ACL(Moralis.User.current()));
+
+        monster.save().then(
+            (monster) => {
+                    // Execute any logic that should take place after the object is saved.
+                console.log("Account aggiunto a USER_PHOTO");
+            },
+            (error) => {
+                console.log("Errore - Account non aggiunto a USER_PHOTO");
+            }
+        );
+    } else {
+        console.log("Account già presente in USER_PHOTO");
+    }
+}
     
 uploadAll = async () => {
     const fileInput = document.getElementById("image");
+
+    checkIfExist();
 
     const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
 
@@ -83,7 +124,7 @@ uploadAll = async () => {
     
 }
 
-function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
+
 
 document.getElementById("upload").onclick = uploadAll;
 
