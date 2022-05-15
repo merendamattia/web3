@@ -27,7 +27,6 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     );
 }
 
-
 uploadImage = async () => {
     const fileInput = document.getElementById("image");
     const data = fileInput.files[0];
@@ -123,8 +122,6 @@ uploadAll = async () => {
     }
     
 }
-
-
 
 document.getElementById("upload").onclick = uploadAll;
 
