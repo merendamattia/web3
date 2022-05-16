@@ -9,10 +9,10 @@ console.log(Moralis.User.current());
 logOut = async () => {
     Moralis.User.logOut();
     console.log("User logged out!");
-    alert("User logged out! - Bye Bye");
+    alert("Logout effettuato correttamente. Alla prossima! ☺️");
     //checkUser();
     //localStorage.clear();
-    location.reload();    
+    location.reload();
 }
 
 /* LOGIN */
@@ -24,7 +24,7 @@ logIn = async () => {
             // cellulare
             const user = await Moralis.authenticate({ 
                 provider: "walletconnect", 
-                signingMessage: "Login by merendamattia.com (mobile login)",
+                signingMessage: "Login - Portale archiviazione dati su IPFS by merendamattia.com (mobile version)",
                 mobileLinks: [
                   "rainbow",
                   "metamask",
@@ -43,7 +43,7 @@ logIn = async () => {
         } else {
             // pc
             user = await Moralis.authenticate({
-                signingMessage: "Login by merendamattia.com (desktop login)",
+                signingMessage: "Login - Portale archiviazione dati su IPFS by merendamattia.com (desktop version)",
             }).then(function (user){
                 checkUser();
                 //location.reload();
