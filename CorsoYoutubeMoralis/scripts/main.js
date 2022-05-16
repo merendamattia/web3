@@ -117,21 +117,14 @@ hasUploadedFiles = async (user) =>{
 
                 
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
-/*
+
                 //console.log(fetchIPFSDoc(object.get("hash_ipfs")));
                 var gg = fetchIPFSDoc(object.get("hash_ipfs"));
-                //var obj = JSON.parse(gg.value);
-                console.log(Object.values(gg));
+                console.log(gg.toString());
 
-                var t = {  "Cats": 10,  "Dogs": 815,  "Fishes": 2};
-
-                var keys = Object.keys(JSON.parse(gg));
-                var values = keys.map(function(key) {
-                    return t[key];
-                });
 
                 //console.log(keys, values);
-                */
+                
 
                 table += "<tr><th scope='row'><a style = 'color: black;' href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>" + (i + 1) + "</a></th>";
                 table += "<td>" + object.get("ImgName") + "</td>";
