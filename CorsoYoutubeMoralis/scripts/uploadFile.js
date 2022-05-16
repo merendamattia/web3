@@ -28,9 +28,10 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
 }
 
 uploadImage = async () => {
+    const nameImg = document.getElementById("nameImg").value;
     const fileInput = document.getElementById("image");
     const data = fileInput.files[0];
-    const file = new Moralis.File(data.name, data);
+    const file = new Moralis.File(nameImg, data);
     await file.saveIPFS();
 
     console.log(file.ipfs(), file.hash())
