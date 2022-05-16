@@ -84,6 +84,12 @@ function getLinkIpfs(hash){
     return url;
 }
 
+async function fetchIPFSDoc(ipfsHash) {
+    const url = "https://gateway.moralisipfs.com/ipfs/" + ipfsHash;
+    const response = await fetch(url);
+    return await response.json();
+}
+
 hasUploadedFiles = async (user) =>{
     if (user) {
         const Monster = Moralis.Object.extend("USER_IPFS");
@@ -109,7 +115,23 @@ hasUploadedFiles = async (user) =>{
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
 
+                
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
+/*
+                //console.log(fetchIPFSDoc(object.get("hash_ipfs")));
+                var gg = fetchIPFSDoc(object.get("hash_ipfs"));
+                //var obj = JSON.parse(gg.value);
+                console.log(Object.values(gg));
+
+                var t = {  "Cats": 10,  "Dogs": 815,  "Fishes": 2};
+
+                var keys = Object.keys(JSON.parse(gg));
+                var values = keys.map(function(key) {
+                    return t[key];
+                });
+
+                //console.log(keys, values);
+                */
 
                 table += "<tr><th scope='row'><a style = 'color: black;' href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>" + (i + 1) + "</a></th>";
                 table += "<td>" + object.get("ImgName") + "</td>";
@@ -156,16 +178,17 @@ function checkUser(){
         hasUploadedFiles(user);
         //isSigned(user);
         document.getElementById("login_button").style.display = "none";
+        document.getElementById("guide").style.display = "none";
         document.getElementById("logout_button").style.display = "block";
         document.getElementById("logged").style.display = "block";
         document.getElementById("content").style.display = "block";
         document.getElementById("profile").style.display = "block";
-        console.log(user.get("ethAddress").length);
         
         var address = user.get("ethAddress");
         var newAddress = address.substring(0,4) + "..." + address.substring(address.length - 3, address.length);
         
         changeValue("address", newAddress);
+
         try{
             getProfileData(user);
         } catch(error){
@@ -176,6 +199,7 @@ function checkUser(){
     } else {
         document.getElementById("login_button").style.display = "block";
         document.getElementById("logout_button").style.display = "none";
+        document.getElementById("guide").style.display = "block";
         document.getElementById("logged").style.display = "none";
         document.getElementById("profile").style.display = "none";
         document.getElementById("content").style.display = "none";

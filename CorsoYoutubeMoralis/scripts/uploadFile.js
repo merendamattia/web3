@@ -47,6 +47,7 @@ uploadMetadata = async (imageHash) => {
     const metadata = {
         "name": nameImg, 
         "description": description, 
+        "type": fileType,
         "file": "https://gateway.moralisipfs.com/ipfs/" + imageHash
     };
 
