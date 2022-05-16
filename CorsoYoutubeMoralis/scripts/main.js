@@ -72,13 +72,6 @@ isSigned = async (user) =>{
     else alert("Metamask not connected!!");
 }
 
-async function fetchIPFSDoc(ipfsHash) {
-    const url = "https://gateway.moralisipfs.com/ipfs/" + ipfsHash;
-    console.log("url: " + url);
-    const response = await fetch(url);
-    return await response.json();
-}
-
 function getLinkIpfs(hash){
     var url = "https://gateway.moralisipfs.com/ipfs/" + hash;
     return url;
@@ -119,11 +112,8 @@ hasUploadedFiles = async (user) =>{
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
 
                 //console.log(fetchIPFSDoc(object.get("hash_ipfs")));
-                var gg = fetchIPFSDoc(object.get("hash_ipfs"));
-                console.log(gg.toString());
-
-
-                //console.log(keys, values);
+                //var gg = fetchIPFSDoc(object.get("hash_ipfs"));
+                //console.log(gg);
                 
 
                 table += "<tr><th scope='row'><a style = 'color: black;' href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>" + (i + 1) + "</a></th>";
