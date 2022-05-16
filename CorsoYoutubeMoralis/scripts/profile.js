@@ -2,9 +2,7 @@ let user = Moralis.User.current();
 if (!user) window.location.replace("../index.html"); 
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
-
-changeValue("address", user.get("ethAddress"));
-
+        
 async function uploadImg() {
     const image = document.getElementById("imageProfile");
     //const username = document.getElementById("username").value;
@@ -74,6 +72,11 @@ check();
 
 async function check(){
     let user = Moralis.User.current();
+
+    var address = user.get("ethAddress");
+    var newAddress = address.substring(0,4) + "..." + address.substring(address.length - 3, address.length);
+            
+    changeValue("address", newAddress);
 
     const Monster = Moralis.Object.extend("USER_PHOTO");
     const query = new Moralis.Query(Monster);

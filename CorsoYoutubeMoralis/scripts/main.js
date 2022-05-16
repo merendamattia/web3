@@ -10,8 +10,8 @@ logOut = async () => {
     Moralis.User.logOut();
     console.log("User logged out!");
     alert("User logged out! - Bye Bye");
-    checkUser();
-    localStorage.clear();
+    //checkUser();
+    //localStorage.clear();
     location.reload();    
 }
 
@@ -157,14 +157,26 @@ function checkUser(){
         //isSigned(user);
         document.getElementById("login_button").style.display = "none";
         document.getElementById("logout_button").style.display = "block";
+        document.getElementById("logged").style.display = "block";
         document.getElementById("content").style.display = "block";
         document.getElementById("profile").style.display = "block";
-        changeValue("address", user.get("ethAddress"));
-        getProfileData(user);
+        console.log(user.get("ethAddress").length);
+        
+        var address = user.get("ethAddress");
+        var newAddress = address.substring(0,4) + "..." + address.substring(address.length - 3, address.length);
+        
+        changeValue("address", newAddress);
+        try{
+            getProfileData(user);
+        } catch(error){
+            console.log(error);
+        }
+        
         changeValue("title", "Bentornato!! 😄");
     } else {
         document.getElementById("login_button").style.display = "block";
         document.getElementById("logout_button").style.display = "none";
+        document.getElementById("logged").style.display = "none";
         document.getElementById("profile").style.display = "none";
         document.getElementById("content").style.display = "none";
         document.getElementById("isNotSigned").style.display = "none";
