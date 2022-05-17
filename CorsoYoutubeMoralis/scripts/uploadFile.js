@@ -115,12 +115,12 @@ uploadAll = async () => {
 
     const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
 
-    if(fileInput.files.length != 0){
+    if(fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== ""){
         changeValue("result", loadGif);
         const image = await uploadImage();
         await uploadMetadata(image);
     } else {
-        changeValue("result", "Selezionare un file!!");
+        changeValue("result", "Devi compilare tutti i campi!!");
     }
     
 }
