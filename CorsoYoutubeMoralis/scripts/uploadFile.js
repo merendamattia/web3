@@ -48,7 +48,8 @@ uploadMetadata = async (imageHash) => {
         "name": nameImg, 
         "description": description, 
         "type": fileType,
-        "file": "https://gateway.moralisipfs.com/ipfs/" + imageHash
+        //"file": "https://gateway.moralisipfs.com/ipfs/" + imageHash
+        "file": imageHash
     };
 
     //changeValue("result", new String(metadata));
