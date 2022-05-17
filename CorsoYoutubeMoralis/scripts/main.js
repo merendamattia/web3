@@ -107,14 +107,23 @@ hasUploadedFiles = async (user) =>{
 
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
-
                 
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
 
-                //console.log(fetchIPFSDoc(object.get("hash_ipfs")));
-                //var gg = fetchIPFSDoc(object.get("hash_ipfs"));
-                //console.log(gg);
-                
+                /*
+                Funzione che ritorna il file json dell'oggetto
+                */
+                var url = getLinkIpfs(object.get("hash_ipfs"));
+                var storedText;
+                var obj;
+
+                fetch(url).then(function(response) {
+                    response.text().then(function(text) {
+                        storedText = text;
+                        obj =JSON.parse(storedText);
+                        console.log(obj);
+                    });
+                });
 
                 table += "<tr><th scope='row'><a style = 'color: black;' href = '" + getLinkIpfs(object.get("hash_ipfs")) + "' target = '_blank'>" + (i + 1) + "</a></th>";
                 table += "<td>" + object.get("ImgName") + "</td>";
@@ -135,7 +144,7 @@ hasUploadedFiles = async (user) =>{
                 else
                     table += "<td><a href = '" + linkImg + "' target = '_blank'>link</a></td>";
                 
-                table += `<td><a href='#' onClick=removeItem('${object.id}')>❌</a></td>`;
+                table += `<td><a style="cursor:pointer;" onClick=removeItem('${object.id}')>❌</a></td>`;
                 
                 table += "</tr>";
 
