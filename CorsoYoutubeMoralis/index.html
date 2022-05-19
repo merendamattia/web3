@@ -49,11 +49,19 @@
         <div id = "isNotSigned">
             <!-- Va lasciato, altrimenti tutto il css si sballa-->
         </div>
-        
-        <button id="login_button" class="btn btn-success btn-lg">
-          <img style = "width: 25px; height: 25px; margin-bottom: 3px;" src="images/icon-metamask.png">
-          Login
-        </button>
+        <div class="card-body p-5 text-center" id = "login_buttons">
+          <center>
+            <button id="login_button" style="width: 30%;" class="btn btn-success btn-lg">
+              <img style = "width: 25px; height: 25px; margin-bottom: 3px;" src="images/icon-metamask.png">
+              Login Metamask
+            </button>
+            <br>
+            <button class="btn btn-lg btn-primary" style="width: 30%;" id="login_wc">
+              <img style="width: 25px; height: 25px" src="images/icon-walletconnect.png"> 
+              Login WalletConnect
+            </button>
+          </center>
+        </div>
         <br>
         <div id = "guide">
           <h3>
@@ -166,6 +174,9 @@
     </main>
     
     <script type="text/javascript" src="./scripts/init.js"></script>
+    <script type="text/javascript" src="./scripts/checkUser.js"></script>
+    <script type="text/javascript" src="./scripts/login.js"></script>
+    <script type="text/javascript" src="./scripts/logout.js"></script>
     <script type="text/javascript" src="./scripts/main.js"></script>
     <script type="text/javascript" src="./scripts/removeItem.js"></script>
     <script type="text/javascript" src="./scripts/filter.js"></script>
