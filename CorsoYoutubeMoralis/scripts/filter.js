@@ -28,7 +28,6 @@ async function filter(){
 
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
-            
 
                 var linkImg = getLinkIpfs(object.get("ImgHash"));
 
