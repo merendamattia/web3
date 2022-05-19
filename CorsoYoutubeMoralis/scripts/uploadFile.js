@@ -18,8 +18,6 @@ function checkUploadSpeed( iterations, update ) {
                     : average = Math.round( ( average + speed ) / 2 );
                 update( speed, average );
                 index++;
-                //console.log(index);
-                //document.getElementById("bar").style.width = index + "%";
                 if( index == iterations ) {
                     window.clearInterval( timer );
                 };
@@ -40,9 +38,6 @@ function checkUploadSpeed( iterations, update ) {
         return result;
     };
 };
-
-
-
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
@@ -161,21 +156,29 @@ uploadAll = async () => {
     checkIfExist();
 
     const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
-    const bar = "<div class='progress'><div id = 'bar' style = 'width: 0%;' class = 'progress-bar' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div></div>";
+    const bar = "<div class='progress'><div id = 'bar' style = 'width: 0%;' class = 'progress-bar progress-bar-striped bg-warning' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div></div>";
 
     if(fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== ""){
-        changeValue("result", loadGif + "<br>" + bar);
+        
+        changeValue("result", bar);
+        
         checkUploadSpeed( 30, function ( speed, average ) {
-            document.getElementById( 'speed' ).textContent = 'speed: ' + speed + ' KiloByte/s';
-            document.getElementById( 'average' ).textContent = 'average: ' + average + ' KiloByte/s';
-            //da sistemare
-            var percentuale = ((average / 10) / filesize) * 100;
+    
+            //document.getElementById( 'average' ).textContent = 'Upload speed: ' + (average / 1000) + ' MB/s';
+            
+            var rap = 1 / (filesize + 10) * 100;
+            console.log("rap: " + rap);
+            
+            percentuale += rap;
             console.log("percentuale: " + percentuale);
             //------------
             document.getElementById("bar").style.width = percentuale + "%";
-        } );
+        });
+
         const image = await uploadImage();
+        
         await uploadMetadata(image);
+    
     } else {
         changeValue("result", "Devi compilare tutti i campi!!");
     }
@@ -184,12 +187,14 @@ uploadAll = async () => {
 
 document.getElementById("upload").onclick = uploadAll;
 
+var percentuale = 0;
 var filesize = 0;
 console.log("filesize: " + filesize);
 
 document.getElementById("image").onchange = () => {
-    filesize = document.getElementById("image").files[0].size / 1000;  //QUESTA MERDA è IN KILOBYTE
+    filesize = document.getElementById("image").files[0].size / 1000000;  //QUESTA MERDA è IN KILOBYTE
     console.log("filesize: " + filesize);
+   //alert((filesize / 1000) + "MB");
 }
 
 
