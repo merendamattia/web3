@@ -1,3 +1,49 @@
+function checkUploadSpeed( iterations, update ) {
+    var average = 0,
+        index = 0,
+        timer = window.setInterval( check, 1000 ); //check every 5 seconds
+    check();
+    
+    function check() {
+        var xhr = new XMLHttpRequest(),
+            url = '?cache=' + Math.floor( Math.random() * 10000 ), //prevent url cache
+            data = getRandomString( 1 ), //1 meg POST size handled by all servers
+            startTime,
+            speed = 0;
+        xhr.onreadystatechange = function ( event ) {
+            if( xhr.readyState == 4 ) {
+                speed = Math.round( 1024 / ( ( new Date() - startTime ) / 1000 ) );
+                average == 0 
+                    ? average = speed 
+                    : average = Math.round( ( average + speed ) / 2 );
+                update( speed, average );
+                index++;
+                //console.log(index);
+                //document.getElementById("bar").style.width = index + "%";
+                if( index == iterations ) {
+                    window.clearInterval( timer );
+                };
+            };
+        };
+        xhr.open( 'POST', url, true );
+        startTime = new Date();
+        xhr.send( data );
+    };
+    
+    function getRandomString( sizeInMb ) {
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_+`-=[]\{}|;':,./<>?", //random data prevents gzip effect
+            iterations = sizeInMb * 1024 * 1024, //get byte count
+            result = '';
+        for( var index = 0; index < iterations; index++ ) {
+            result += chars.charAt( Math.floor( Math.random() * chars.length ) );
+        };     
+        return result;
+    };
+};
+
+
+
+
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
 function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
@@ -115,9 +161,19 @@ uploadAll = async () => {
     checkIfExist();
 
     const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
+    const bar = "<div class='progress'><div id = 'bar' style = 'width: 0%;' class = 'progress-bar' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div></div>";
 
     if(fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== ""){
-        changeValue("result", loadGif);
+        changeValue("result", loadGif + "<br>" + bar);
+        checkUploadSpeed( 30, function ( speed, average ) {
+            document.getElementById( 'speed' ).textContent = 'speed: ' + speed + ' KiloByte/s';
+            document.getElementById( 'average' ).textContent = 'average: ' + average + ' KiloByte/s';
+            //da sistemare
+            var percentuale = ((average / 10) / filesize) * 100;
+            console.log("percentuale: " + percentuale);
+            //------------
+            document.getElementById("bar").style.width = percentuale + "%";
+        } );
         const image = await uploadImage();
         await uploadMetadata(image);
     } else {
@@ -127,6 +183,14 @@ uploadAll = async () => {
 }
 
 document.getElementById("upload").onclick = uploadAll;
+
+var filesize = 0;
+console.log("filesize: " + filesize);
+
+document.getElementById("image").onchange = () => {
+    filesize = document.getElementById("image").files[0].size / 1000;  //QUESTA MERDA è IN KILOBYTE
+    console.log("filesize: " + filesize);
+}
 
 
 
