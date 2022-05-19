@@ -162,23 +162,31 @@ uploadAll = async () => {
         
         changeValue("result", bar);
         
-        checkUploadSpeed( 30, function ( speed, average ) {
-    
-            //document.getElementById( 'average' ).textContent = 'Upload speed: ' + (average / 1000) + ' MB/s';
-            
+        var timer = setInterval(function (){
             var rap = 1 / (filesize + 10) * 100;
             console.log("rap: " + rap);
-            
+        
             percentuale += rap;
             console.log("percentuale: " + percentuale);
-            //------------
+            
             document.getElementById("bar").style.width = percentuale + "%";
-        });
+        }, 1000);
 
-        const image = await uploadImage();
+        try{
+            const image = await uploadImage();
         
-        await uploadMetadata(image);
-    
+            await uploadMetadata(image);
+        } catch (error){
+            console.log(error);
+            window.clearInterval(timer);
+        }
+            
+            
+            //window.clearInterval(timer);
+        
+
+        
+
     } else {
         changeValue("result", "Devi compilare tutti i campi!!");
     }
@@ -193,10 +201,6 @@ console.log("filesize: " + filesize);
 
 document.getElementById("image").onchange = () => {
     filesize = document.getElementById("image").files[0].size / 1000000;  //QUESTA MERDA è IN KILOBYTE
-    console.log("filesize: " + filesize);
+    console.log("filesize: " + filesize + " MB");
    //alert((filesize / 1000) + "MB");
 }
-
-
-
-
