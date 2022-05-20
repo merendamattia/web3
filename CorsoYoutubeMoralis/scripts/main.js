@@ -2,9 +2,6 @@
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
-console.log("user: ");
-console.log(Moralis.User.current());
-
 function getLinkIpfs(hash){
     var url = "https://gateway.moralisipfs.com/ipfs/" + hash;
     return url;

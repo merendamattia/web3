@@ -74,7 +74,7 @@ async function check(){
     let user = Moralis.User.current();
 
     var address = user.get("ethAddress");
-    var newAddress = address.substring(0,4) + "..." + address.substring(address.length - 3, address.length);
+    var newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
             
     changeValue("address", newAddress);
 

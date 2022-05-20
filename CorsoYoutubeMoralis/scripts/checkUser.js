@@ -1,4 +1,5 @@
 let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+console.log("smartphone: " + isMobile);
 
 checkUser();
 
@@ -26,7 +27,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
         document.getElementById("profile").style.display = "block";
         
         var address = user.get("ethAddress");
-        var newAddress = address.substring(0,4) + "..." + address.substring(address.length - 3, address.length);
+        var newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
         
         changeValue("address", newAddress);
 
@@ -127,6 +128,7 @@ async function hasUploadedFilesMobile(user) {
     if (user) {
         const Monster = Moralis.Object.extend("USER_IPFS");
         const query = new Moralis.Query(Monster);
+        document.getElementById("scritta_logout").style.display = "none";
 
         query.equalTo("address", user.get("ethAddress"));
 

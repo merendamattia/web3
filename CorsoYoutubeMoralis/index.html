@@ -10,6 +10,8 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/navbar-fixed/">
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
     <script src="https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.7.1/web3-provider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
     <!-- Bootstrap core CSS -->
     <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,14 +30,13 @@
           <div class="container-fluid">
             <a style = "color: black;" href = "index.html" class="navbar-brand"></a>
             <form class="d-flex" role="search">
-              <a style = "color: black;" class="navbar-brand">Address: <span id = "address"></span></a>
-              
+              <a style = "color: black;" class="navbar-brand"><img src="./images/ethereum.png" style="margin-bottom: 5px; height: 25px;"> <span id = "address"></span></a>
               <button id="logout_button" class="btn btn-outline-danger w-20" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 20 19">
                   <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
                   <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
                 </svg>
-                Logout
+                <span id = "scritta_logout">Logout</span>
               </button>
   
             </form>
@@ -193,5 +194,6 @@
     <script type="text/javascript" src="./scripts/filter.js"></script>
     <script type="text/javascript" src="./scripts/uploadFile.js"></script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>    
+    
   </body>
 </html>
