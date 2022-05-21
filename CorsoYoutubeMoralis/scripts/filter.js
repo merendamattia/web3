@@ -173,7 +173,6 @@ async function filter(){
                         verify = true;
                 }
                 
-
                 if(verify){
                     table += populateTableMobile(object, count);
                     popup += popUpMobile(object, count);
