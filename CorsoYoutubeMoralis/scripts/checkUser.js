@@ -12,6 +12,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
     let user = Moralis.User.current();
 
     document.getElementById("isNotSigned").style.display = "none";
+    document.getElementById("filterDiv").style.display = "none";
 
     if(user){
         if(isMobile) hasUploadedFilesMobile(user);
@@ -25,6 +26,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
         document.getElementById("logged").style.display = "block";
         document.getElementById("content").style.display = "block";
         document.getElementById("profile").style.display = "block";
+        
         
         var address = user.get("ethAddress");
         var newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
@@ -63,6 +65,7 @@ async function hasUploadedFiles(user) {
 
         if(results.length !== 0) {
             document.getElementById("IPFS_content").style.display = "block";
+            document.getElementById("filterDiv").style.display = "block";
 
             let str = "";
             var table = "<table class='table table-responsive'><thead>";
@@ -218,4 +221,18 @@ async function hasUploadedFilesMobile(user) {
         else document.getElementById("IPFS_content").style.display = "none";
     } 
     else alert("Metamask not connected!!");
+}
+
+document.getElementById("filterDiv").style.display = "none";
+
+function abilitaFilter(){
+    if(document.getElementById("filterDiv").style.display == "block"){
+        document.getElementById("filterDiv").style.display = "none";
+        document.getElementById("buttonAbilitaFiltri").innerHTML = "Abilita filtri";
+    }  
+    else{
+        document.getElementById("filterDiv").style.display = "block";
+        document.getElementById("buttonAbilitaFiltri").innerHTML = "Nascondi filtri";
+    }
+        
 }

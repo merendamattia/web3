@@ -115,19 +115,24 @@
             <div id = "IPFS_content">
               <hr>
               <h4><span class = "bg-lightblue">Files IPFS</span></h4>
-              <div class="input-group">
-                <select class="form-select w-50" id="filterSelect" aria-label="Example select with button addon">
-                  <option value="reset" selected>Filtra per tipo</option>
-                  <option value="Immagine">Immagine</option>
-                  <option value="Video">Video</option>
-                  <option value="Audio">Audio</option>
-                  <option value="Testo">Testo</option>
-                  <option value="Zip">.Zip</option>
-                  <option value="Altro">Altro</option>
-                </select>
-                <button class="btn btn-outline-secondary" type="button" onclick="filter()">Filtra</button>
-                <button class="btn btn-outline-secondary" type="button" onclick="location.reload()">Mostra tutto</button>
-             </div>
+              <button class="btn btn-outline-secondary mb-2" type="button" onclick="abilitaFilter()" id = "buttonAbilitaFiltri">Nascondi filtri</button>
+              <div id ="filterDiv">
+                <div class="input-group">
+                  <select class="form-select w-40" id="filterSelect" aria-label="Example select with button addon">
+                    <option value="" selected>Filtra per tipo</option>
+                    <option value="Immagine">Immagine</option>
+                    <option value="Video">Video</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Testo">Testo</option>
+                    <option value="Zip">.Zip</option>
+                    <option value="Altro">Altro</option>
+                  </select>
+                  <input class="form-control w-30" type="date" id="dateFilter" name="dateFilter" required>
+                  <button class="btn btn-outline-secondary" type="button" onclick="filter()">Filtra</button>
+                  <button class="btn btn-outline-secondary" type="button" onclick="location.reload()">Mostra tutto</button>
+                </div>
+              </div>
+              <br>
               <p id = "getRecords">
               </p>
             </div>
@@ -180,12 +185,8 @@
           <p style="color: red;" id ="error"></p>
           <p id = "session"></p>
     </main>
-    
-    
 
-    
-
-    <p id = "popup" style="color: white;"> </p>
+    <p id = "popup" style="color: #5bb5bf;"> </p>
     
     <!-- scripts -->
     <script src="./scripts/particles.js"></script>
