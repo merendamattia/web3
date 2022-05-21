@@ -131,7 +131,6 @@ function showNotLoggedContent(){
     document.getElementById("isNotSigned").style.display = "none";
 }
 
-
 let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 console.log("smartphone: " + isMobile);
 
@@ -146,7 +145,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
     let user = Moralis.User.current();
 
     document.getElementById("isNotSigned").style.display = "none";
-    document.getElementById("filterDiv").style.display = "none";
+    //document.getElementById("filterDiv").style.display = "none";
 
     if(user){
         if(isMobile) hasUploadedFilesMobile(user);
@@ -214,7 +213,8 @@ async function hasUploadedFilesMobile(user) {
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
 
-                popup = popUpMobile(object, i);
+                popup += popUpMobile(object, i);
+                
                 table += populateTableMobile(object, i);
 
             }
@@ -228,7 +228,7 @@ async function hasUploadedFilesMobile(user) {
     else alert("Metamask not connected!!");
 }
 
-document.getElementById("filterDiv").style.display = "none";
+//document.getElementById("filterDiv").style.display = "none";
 
 function abilitaFilter(){
     if(document.getElementById("filterDiv").style.display == "block"){
@@ -238,6 +238,5 @@ function abilitaFilter(){
     else{
         document.getElementById("filterDiv").style.display = "block";
         document.getElementById("buttonAbilitaFiltri").innerHTML = "Nascondi filtri";
-    }
-        
+    } 
 }
