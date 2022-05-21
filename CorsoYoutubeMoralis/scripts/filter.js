@@ -145,15 +145,15 @@ async function filter(){
                 if(i == 0)
                     table += getFirstRow();
 
-                if(dateVerify || tipoVerify){
-                    if(object.get("fileType") === tipo || when === now)
-                        verify = true;
-                }
-                else if(dateVerify && tipoVerify){
+                if(dateVerify && tipoVerify){
                     if(when === now && object.get("fileType") === tipo)
                         verify = true;
                 }
-
+                else if(dateVerify || tipoVerify){
+                    if(object.get("fileType") === tipo || when === now)
+                        verify = true;
+                }
+                    
                 if(verify) {
                     table += populateTable(object, count);
                     count++;
@@ -164,14 +164,15 @@ async function filter(){
                 if(i == 0)
                     table += getFirstRowMobile();
 
-                if(dateVerify || tipoVerify){
-                    if(object.get("fileType") === tipo || when === now)
-                        verify = true;
-                }
-                else if(dateVerify && tipoVerify){
+                if(dateVerify && tipoVerify){
                     if(when === now && object.get("fileType") === tipo)
                         verify = true;
                 }
+                else if(dateVerify || tipoVerify){
+                    if(object.get("fileType") === tipo || when === now)
+                        verify = true;
+                }
+                
 
                 if(verify){
                     table += populateTableMobile(object, count);
