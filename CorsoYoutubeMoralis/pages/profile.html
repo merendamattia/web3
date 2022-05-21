@@ -15,15 +15,14 @@
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/navbar-top-fixed.css" rel="stylesheet">
     <link href="../css/main.css" rel="stylesheet">
+    <link media="screen" href="../css/particles.css" rel="stylesheet">
   </head>
 
   <body>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
     <main class="container">
-
-      
-
       <div class="shadow-lg p-5 mb-5 bg-white rounded">
-
         <nav class="navbar" id = "logged">
           <div class="container-fluid">
             <a style = "color: black;" href = "index.html" class="navbar-brand"> </a>
@@ -42,7 +41,7 @@
           </div>
         </nav>
 
-        <h2 id = "title">Profilo</h2>
+        <h1 id = "title">Profilo</h1>
         <div class="text-center">
           <span id = "profileData"></span>
         </div>
@@ -73,6 +72,8 @@
           <p id = "session"></p>
     </main>
     
+    <script src="../scripts/particles.js"></script>
+    <script src="../scripts/app.js"></script>
     <script type="text/javascript" src="../scripts/init.js"></script>
     <script type="text/javascript" src="../scripts/profile.js"></script>
     <script type="text/javascript" src="../scripts/filter.js"></script>

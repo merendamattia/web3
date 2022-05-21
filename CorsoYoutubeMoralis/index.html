@@ -17,13 +17,15 @@
     <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/navbar-top-fixed.css" rel="stylesheet">
     <link href="./css/main.css" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="./css/particles.css">
+</head>
   </head>
 
   <body>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
     <main class="container">
 
-      
-   
       <div class="shadow-lg p-5 mb-5 bg-white rounded">
 
         <nav class="navbar" id = "logged">
@@ -179,12 +181,15 @@
           <p id = "session"></p>
     </main>
     
+    
 
     
 
     <p id = "popup" style="color: white;"> </p>
     
-
+    <!-- scripts -->
+    <script src="./scripts/particles.js"></script>
+    <script src="./scripts/app.js"></script>
     <script type="text/javascript" src="./scripts/init.js"></script>
     <script type="text/javascript" src="./scripts/checkUser.js"></script>
     <script type="text/javascript" src="./scripts/login.js"></script>
