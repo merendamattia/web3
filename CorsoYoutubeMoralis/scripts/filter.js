@@ -1,13 +1,13 @@
 function getFirstRow(){
     var table = "<table class='table'><thead>";
-        table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
-        table += "<th scope='col'>Descrizione</th><th scope='col'>Ultima modifica</th>";
-        table += "<th scope='col'>Tipo</th>";
-        table += "<th scope='col'>File</th>";
-        table += "<th scope='col'>Share</th>";
-        //table += "<th scope='col'>Json</th>";
-        table += "</tr></thead><tbody>";
-        return table;
+    table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
+    table += "<th scope='col'>Descrizione</th><th scope='col'>Ultima modifica</th>";
+    table += "<th scope='col'>Tipo</th>";
+    table += "<th scope='col'>File</th>";
+    table += "<th scope='col'>Share</th>";
+    //table += "<th scope='col'>Json</th>";
+    table += "</tr></thead><tbody>";
+    return table;
 }
 
 function populateTable(object, i){
