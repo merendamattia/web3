@@ -118,18 +118,26 @@ async function filter(){
             
         var table = "";
         var popup = "";
-var count = 0;
+        var count = 0;
+
         for (let i = 0; i < results.length; i++) {
             
             const object = results[i];
             var verify = false;
+            var dateVerify = false;
+            var tipoVerify = false;
             
-
             // Data di upload e data selezionata da utente
             let when = object.get("updatedAt");
             let now = new Date(date);
             when = when.toString().substring(0, 15);
             now = now.toString().substring(0, 15);
+
+            // Verifica se sono stati inseriti i parametri di ricerca
+            if(date !== '') dateVerify = true;
+            if(tipo !== '') tipoVerify = true; 
+
+            if(!dateVerify && !tipoVerify) location.reload();
             
             // Inizio selezione
             if(!isMobile){
@@ -137,15 +145,11 @@ var count = 0;
                 if(i == 0)
                     table += getFirstRow();
 
-                if(date === '' && tipo !== ''){
-                    if(object.get("fileType") === tipo)
+                if(dateVerify || tipoVerify){
+                    if(object.get("fileType") === tipo || when === now)
                         verify = true;
                 }
-                else if(date !== '' && tipo === ''){
-                    if(when === now)
-                        verify = true;
-                }
-                else if(date !== '' && tipo !== ''){
+                else if(dateVerify && tipoVerify){
                     if(when === now && object.get("fileType") === tipo)
                         verify = true;
                 }
@@ -160,15 +164,11 @@ var count = 0;
                 if(i == 0)
                     table += getFirstRowMobile();
 
-                if(date === '' && tipo !== ''){
-                    if(object.get("fileType") === tipo)
+                if(dateVerify || tipoVerify){
+                    if(object.get("fileType") === tipo || when === now)
                         verify = true;
                 }
-                else if(date !== '' && tipo === ''){
-                    if(when === now)
-                        verify = true;
-                }
-                else if(date !== '' && tipo !== ''){
+                else if(dateVerify && tipoVerify){
                     if(when === now && object.get("fileType") === tipo)
                         verify = true;
                 }
@@ -176,7 +176,7 @@ var count = 0;
                 if(verify){
                     table += populateTableMobile(object, count);
                     popup += popUpMobile(object, count);
-                    console.log(count);
+                    //console.log(count);
                     count++;
                 } 
             }
