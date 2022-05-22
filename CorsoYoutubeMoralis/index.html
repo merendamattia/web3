@@ -120,7 +120,7 @@
               -->
               <div id ="filterDiv">
                 <div class="input-group">
-                  <select class="form-select w-40" id="filterSelect" aria-label="Example select with button addon">
+                  <select class="form-select w-20" id="filterSelect" aria-label="Filtre per tipo">
                     <option value="" selected>Filtra per tipo</option>
                     <option value="Immagine">Immagine</option>
                     <option value="Video">Video</option>
@@ -129,7 +129,8 @@
                     <option value="Zip">.Zip</option>
                     <option value="Altro">Altro</option>
                   </select>
-                  <input class="form-control w-30" type="date" id="dateFilter" name="dateFilter" required>
+                  <input class="form-control w-20" type="date" id="dateFilter" name="dateFilter" required>
+                  <input class="form-control w-20" type="text" id="nameFilter" name="nameFilter" placeholder="Filtra per nome" required>
                   <button class="btn btn-outline-secondary" type="button" onclick="filter()">Filtra</button>
                   <button class="btn btn-outline-secondary" type="button" onclick="location.reload()">Reset</button>
                 </div>

@@ -1,3 +1,4 @@
+// ------------------------------------- DESKTOP
 function getFirstRow(){
     var table = "<table class='table'><thead>";
     table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
@@ -107,11 +108,11 @@ async function filter(){
     
     const tipo = document.getElementById("filterSelect").value;
     const date = document.getElementById("dateFilter").value;
+    const nome = document.getElementById("nameFilter").value;
 
     query.equalTo("address", user.get("ethAddress"));
 
     const results = await query.find();
-    //alert(results.length);
 
     if(results.length !== 0) {
         document.getElementById("IPFS_content").style.display = "block";
@@ -126,6 +127,7 @@ async function filter(){
             var verify = false;
             var dateVerify = false;
             var tipoVerify = false;
+            var nomeVerify = false;
             
             // Data di upload e data selezionata da utente
             let when = object.get("updatedAt");
@@ -136,24 +138,43 @@ async function filter(){
             // Verifica se sono stati inseriti i parametri di ricerca
             if(date !== '') dateVerify = true;
             if(tipo !== '') tipoVerify = true; 
+            if(nome !== '') nomeVerify = true; 
 
-            if(!dateVerify && !tipoVerify) location.reload();
-            
+            // RICARICA LA PAGINA SE NESSUN FILTRO è STATO SELEZIONATO
+            if(!dateVerify && !tipoVerify && !nomeVerify) location.reload();
+
+            // TUTTI I FILTRI SELEZIONATI
+            if(dateVerify && tipoVerify && nomeVerify){
+                if(when === now && object.get("fileType") === tipo && object.get("ImgName").includes(nome))
+                    verify = true;
+            }
+            // SOLO DATA E TIPO SELEZIONATI
+            else if(dateVerify && tipoVerify){
+                if(object.get("fileType") === tipo && when === now )
+                    verify = true;
+            }
+            // SOLO DATA E NOME SELEZIONATI
+            else if(dateVerify && nomeVerify){
+                if(when === now && object.get("ImgName").includes(nome))
+                    verify = true;
+            }
+            // SOLO TIPO E NOME SELEZIONATI
+            else if(tipoVerify && nomeVerify){
+                if(object.get("fileType") === tipo && object.get("ImgName").includes(nome))
+                    verify = true;
+            }
+            // UN SOLO FILTRO SELEZIONATO
+            else if(dateVerify || tipoVerify || nomeVerify){
+                if(object.get("fileType") === tipo || when === now || object.get("ImgName").includes(nome))
+                    verify = true;
+            }
+
             // Inizio selezione
             if(!isMobile){
                 //Desktop
                 if(i == 0)
                     table += getFirstRow();
-
-                if(dateVerify && tipoVerify){
-                    if(when === now && object.get("fileType") === tipo)
-                        verify = true;
-                }
-                else if(dateVerify || tipoVerify){
-                    if(object.get("fileType") === tipo || when === now)
-                        verify = true;
-                }
-                    
+  
                 if(verify) {
                     table += populateTable(object, count);
                     count++;
@@ -164,26 +185,21 @@ async function filter(){
                 if(i == 0)
                     table += getFirstRowMobile();
 
-                if(dateVerify && tipoVerify){
-                    if(when === now && object.get("fileType") === tipo)
-                        verify = true;
-                }
-                else if(dateVerify || tipoVerify){
-                    if(object.get("fileType") === tipo || when === now)
-                        verify = true;
-                }
-                
                 if(verify){
                     table += populateTableMobile(object, count);
                     popup += popUpMobile(object, count);
-                    //console.log(count);
                     count++;
                 } 
             }
         }
-        table += "</tbody></table><br>";
-        changeValue("getRecords", table);
-        changeValue("popup", popup);
+        
+        if(count != 0){
+            table += "</tbody></table><br>";
+            changeValue("getRecords", table);
+            changeValue("popup", popup);
+        } else
+            alert("Nessun risultato trovato! 😔");
+        
     } 
     else
         alert("Nessun risultato trovato! 😔");
