@@ -30,5 +30,4 @@ async function getProfileData(user){
         ris += "<p>" + object.get("username") + "</p>";
 
     changeValue("profileData", ris);
-    
 }
