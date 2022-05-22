@@ -19,7 +19,7 @@
 
 @media only screen and (min-width: 1280px) {
   .col-2.mx-auto {width: 50%;}
-  #login_button, #login_wc, #mostrFiltriId {width: 10%;}   /*  Pulsanti login     */
+  #login_button, #login_wc, #mostrFiltriId {width: 15%;}   /*  Pulsanti login     */
 }
 
 @media only screen and (max-width: 1279px) {
@@ -32,14 +32,8 @@ a {
     text-decoration: none;
 }
 
-.bg-yellow{
-  background-color: yellow;
-}
+.bg-yellow{ background-color: yellow; }
 
-.bg-lightorange{
-  background-color: #fedbd3;
-}
+.bg-lightorange{ background-color: #fedbd3; }
 
-.bg-lightblue{
-  background-color: #d3ede8;
-}
+.bg-lightblue{ background-color: #d3ede8; }
