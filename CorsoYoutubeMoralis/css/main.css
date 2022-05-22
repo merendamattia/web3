@@ -15,6 +15,31 @@
     }
 }
 
+/* For mobile: */
+
+@media only screen and (min-width: 1280px) {
+  .col-2.mx-auto {width: 50%;}
+  #login_button, #login_wc {width: 50%;}   /*  Pulsanti login     */
+}
+
+@media only screen and (max-width: 1279px) {
+  .col-2.mx-auto {width: 100%;}               /*  Form upload file   */
+  #login_button, #login_wc {width: 100%;}     /*  Pulsanti login     */
+  .mobile{width: 100%;}
+}
+
 a {
     text-decoration: none;
-  }
+}
+
+.bg-yellow{
+  background-color: yellow;
+}
+
+.bg-lightorange{
+  background-color: #fedbd3;
+}
+
+.bg-lightblue{
+  background-color: #d3ede8;
+}
