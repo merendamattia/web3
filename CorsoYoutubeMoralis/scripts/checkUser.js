@@ -200,7 +200,6 @@ async function hasUploadedFilesMobile(user) {
         query.equalTo("address", user.get("ethAddress"));
 
         const results = await query.descending("updatedAt").find();
-        //alert(results.length);
 
         if(results.length !== 0) {
             document.getElementById("IPFS_content").style.display = "block";
@@ -225,17 +224,4 @@ async function hasUploadedFilesMobile(user) {
         else document.getElementById("IPFS_content").style.display = "none";
     } 
     else alert("Metamask not connected!!");
-}
-
-//document.getElementById("filterDiv").style.display = "none";
-
-function abilitaFilter(){
-    if(document.getElementById("filterDiv").style.display == "block"){
-        document.getElementById("filterDiv").style.display = "none";
-        document.getElementById("buttonAbilitaFiltri").innerHTML = "Abilita filtri";
-    }  
-    else{
-        document.getElementById("filterDiv").style.display = "block";
-        document.getElementById("buttonAbilitaFiltri").innerHTML = "Nascondi filtri";
-    } 
 }

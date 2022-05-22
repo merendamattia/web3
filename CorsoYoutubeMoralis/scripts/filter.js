@@ -102,6 +102,7 @@ function populateTableMobile(object, i){
     return table;
 }
 
+// ------------------------------------- MAIN
 async function filter(){
     const Monster = Moralis.Object.extend("USER_IPFS");
     const query = new Moralis.Query(Monster);
@@ -112,6 +113,10 @@ async function filter(){
     const nome = document.getElementById("nameFilter").value.toLowerCase();
 
     query.equalTo("address", user.get("ethAddress"));
+
+    //TODO
+    //console.log(document.getElementById("maxElementFilter").value);
+    //query.limit(parseInt(document.getElementById("maxElementFilter").value));
 
     const results = await query.descending("updatedAt").find();
 
@@ -210,8 +215,8 @@ async function filter(){
         alert("Nessun risultato trovato! 😔");
 }
 
+// ------------------------------------- PULSANTE ABILITA FILTRI
 var showFilter = false;
-
 function mostraFiltri() {
 
     showFilter = !showFilter;
@@ -219,9 +224,15 @@ function mostraFiltri() {
     if(showFilter){
         document.getElementById("mostrFiltriId").innerHTML="Nascondi Filtri";
         let filterForm = ` <br> <div class="col-2 mx-auto"> <form> <div class="row"> <div class="col"> <select class="form-select w-20" id="filterSelect" aria-label="Filtre per tipo"> <option value="" selected disabled>Tipo</option> <option value="Immagine">Immagine</option> <option value="Video">Video</option> <option value="Audio">Audio</option> <option value="Testo">Testo</option> <option value="Zip">.Zip</option> <option value="Altro">Altro</option> </select> </div> <div class="col"> <input class="form-control w-20" type="date" id="dateFilter" name="dateFilter" required> </div> </div> <br> <div class="row"> <div class="col"> <input class="form-control w-20" type="text" id="nameFilter" name="nameFilter" placeholder="Nome" required> </div> <div class="col text-center"> <button class="btn btn-outline-secondary" style="width: 48%;" type="button" onclick="filter()">Filtra</button> <button class="btn btn-outline-danger" style="width: 48%;" type="button" onclick="location.reload()">Reset</button> </div> </div> </form> </div>`;
+        
+        //TODO
+        //TABELLA CON PULSANTE PER 
+        //SETTARE IL NUMERO MASSIMO
+        //DI ELEMENTI VISTI A SCHERMO
+        //let filterForm = ` <br> <div class="col-2 mx-auto"> <form> <div class="row"> <div class="col"> <select class="form-select w-20" id="filterSelect" aria-label="Filtre per tipo"> <option value="" selected disabled>Tipo</option> <option value="Immagine">Immagine</option> <option value="Video">Video</option> <option value="Audio">Audio</option> <option value="Testo">Testo</option> <option value="Zip">.Zip</option> <option value="Altro">Altro</option> </select> </div> <div class="col"> <input class="form-control w-20" type="date" id="dateFilter" name="dateFilter" required> </div> </div> <br> <div class="row"> <div class="col"> <input class="form-control w-20" type="text" id="nameFilter" name="nameFilter" placeholder="Nome" required> </div>  <div class="col"><input class="form-control w-20" type="number" id="maxElementFilter" name="maxElementFilter" placeholder="Max elementi" value = "15"> </div></div><div class="row"><div class="col text-center"> <button class="btn btn-outline-secondary" style="width: 48%;" type="button" onclick="filter()">Filtra</button> <button class="btn btn-outline-danger" style="width: 48%;" type="button" onclick="location.reload()">Reset</button></div></div></form></div>`;
+        
         document.getElementById("filterDiv").style.display = "block";
         changeValue("filterDiv", filterForm);
-        //document.getElementById("dateFilter").valueAsDate = new Date();
     }
     else{
         document.getElementById("mostrFiltriId").innerHTML="Mostra Filtri";
