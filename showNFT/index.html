@@ -18,7 +18,7 @@
 
         async function getNFTs(){
             // get polygon NFTs for address
-            const options = { chain: "eth", address: "0x683BFB1a245939843E8aa160cBC8C1d01E0F18d5" };
+            const options = { chain: "polygon", address: "0x3F0088f8a5a5c18eF04e8ED787f2B96986a09219" };
             const nfts = await Moralis.Web3.getNFTs(options);
             console.log(nfts);
 

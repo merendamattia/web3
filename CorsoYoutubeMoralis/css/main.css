@@ -19,7 +19,8 @@
 
 @media only screen and (min-width: 1280px) {
   .col-2.mx-auto {width: 50%;}
-  #login_button, #login_wc, #mostrFiltriId {width: 15%;}   /*  Pulsanti login     */
+  #login_button, #login_wc {width: 30%;}   /*  Pulsanti login     */
+  #mostrFiltriId {width: 15%;}
 }
 
 @media only screen and (max-width: 1279px) {
