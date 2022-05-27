@@ -194,6 +194,14 @@ async function hasUploadedFiles(user) {
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
 
+                let url = getLinkIpfs(object.get("hash_ipfs"));
+            
+                fetch(url).then(response => response.json()).then(data => {
+                    //console.log(data);
+                    
+                    //document.getElementById("result").innerHTML += data.name + "<br>";
+                });
+                
                 table += populateTable(object, i);
             }
             table += "</tbody></table><br>";

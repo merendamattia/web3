@@ -12,7 +12,10 @@
   </head>
   <body>
     <h1>NFT gallery</h1>
-    <p>Address wallet: 0xDFE7772e8647CF105C15Da6319Efd64C8d4Fb12D</p>
+    <p>Inserisci indirizzo</p>
+    <input type="text" id="address">
+      <button onclick="getNFTs()">Cerca</button>
+    <p id="wallet"></p>
     <p id = "result"></p>
 
 
@@ -23,12 +26,14 @@
         Moralis.start({ serverUrl, appId });
 
         async function getNFTs(){
-            const options = { address: "0xDFE7772e8647CF105C15Da6319Efd64C8d4Fb12D" };
+            var ad = document.getElementById("address").value;
+            document.getElementById("wallet").innerHTML = "Address wallet: " + ad;
+            const options = { address: ad };
             const nfts = await Moralis.Web3.getNFTs(options);
             console.log(nfts);
 
             var table = "<table>";
-            table += "<tr><td>Address NFT</td><td>Type</td><td>Amount</td><td>Name</td></tr>";
+            table += "<tr><td>Address NFT</td><td>Type</td><td>Amount</td><td>Name</td><td>Id</td></tr>";
 
             nfts.forEach(function(nft){
 
@@ -37,6 +42,7 @@
                 table += "<td>" + nft.contract_type + "</td>";
                 table += "<td>" + nft.amount + "</td>";
                 table += "<td>" + nft.name + "</td>";
+                table += "<td>" + nft.token_id + "</td>";
                 table += "</tr>";
 
             });
@@ -46,7 +52,7 @@
             document.getElementById("result").innerHTML = table;
         }
 
-        getNFTs();
+        
 
 
     </script>
