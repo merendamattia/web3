@@ -127,6 +127,7 @@ function showLoggedContent(user){
     changeValue("title", "Bentornato!! 😄");
     var address = user.get("ethAddress");
     var newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
+    document.getElementById("addressUser").title = address;
     changeValue("address", newAddress);
 }
 
