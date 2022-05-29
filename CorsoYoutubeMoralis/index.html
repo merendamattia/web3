@@ -27,14 +27,15 @@
     <div id="particles-js"></div>
     <main class="container">
 
-      <div class="shadow-lg p-5 mb-5 bg-white" style="border-radius: 20px;">
+      <div class="shadow-lg p-5 mb-5 bg-white" id="paddingSmartphone" style="border-radius: 20px;">
 
+        <!--
         <nav class="navbar" id = "logged">
           <div class="container-fluid">
             <a style = "color: black;" href = "index.html" class="navbar-brand"></a>
             <form class="d-flex" role="search">
               <a class="navbar-brand" id ="checkNFT" data-bs-toggle="tooltip" title="NFT" rel="tooltip" data-bs-placement="bottom">
-                <div class="spinner-border text-warning" role="status" >
+                <div class="spinner-border text-warning" role="status">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </a>
@@ -50,8 +51,37 @@
             </form>
           </div>
         </nav>
+        -->
 
-        <h1 id = "title">Benvenuto! - Portale archiviazione dati su IPFS</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark" id = "logged">
+          <div class="container-fluid">
+            <a style = "color: black;" class="navbar-brand"><h1 id = "title">Benvenutooo</h1></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-list" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav ms-auto" style = "text-align: center;">              	
+                  <a class="navbar-brand" id ="checkNFT" data-bs-toggle="tooltip" title="NFT" rel="tooltip" data-bs-placement="bottom" style = "color: black;">
+                    <div class="spinner-border text-warning" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </a>
+                  <a style = "color: black;" id ="addressUser" class="navbar-brand" data-bs-toggle="tooltip" title="" rel="tooltip" data-bs-placement="bottom"><img src="./images/ethereum.png" style="margin-bottom: 5px; height: 25px;"> <span id = "address"></span></a>
+                  <button id="logout_button" class="btn btn-outline-danger w-20" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 20 19">
+                      <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                      <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                    </svg>
+                    <span id = "scritta_logout">Logout</span>
+                  </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <h1 id = "titleNotLogged">Benvenuto! - Portale archiviazione dati su IPFS</h1>
         
         <div class="text-center" id = "profile">
           <span id = "profileData"></span>

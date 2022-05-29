@@ -112,13 +112,13 @@ function populateTableMobile(object, i){
     return table;
 }
 
-
 // ------------------------------------- LOGGED
 function showLoggedContent(user){
     document.getElementById("login_button").style.display = "none";
     document.getElementById("login_buttons").style.display = "none";
     document.getElementById("login_wc").style.display = "none";
     document.getElementById("guide").style.display = "none";
+    document.getElementById("titleNotLogged").style.display = "none";
     document.getElementById("logout_button").style.display = "block";
     document.getElementById("logged").style.display = "block";
     document.getElementById("content").style.display = "block";
@@ -126,7 +126,11 @@ function showLoggedContent(user){
     
     changeValue("title", "Bentornato!! 😄");
     var address = user.get("ethAddress");
-    var newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
+    var newAddress = "";
+    if(isMobile)
+        newAddress = address.substring(0,5) + ".." + address.substring(address.length - 4, address.length);
+    else
+        newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
     document.getElementById("addressUser").title = address;
     changeValue("address", newAddress);
 }
@@ -136,6 +140,7 @@ function showNotLoggedContent(){
     document.getElementById("login_button").style.display = "block";
     document.getElementById("login_wc").style.display = "block";
     document.getElementById("login_buttons").style.display = "block";
+    document.getElementById("titleNotLogged").style.display = "block";
     document.getElementById("logout_button").style.display = "none";
     document.getElementById("guide").style.display = "block";
     document.getElementById("logged").style.display = "none";
@@ -215,9 +220,10 @@ async function hasUploadedFiles(user) {
 
 async function hasUploadedFilesMobile(user) {
     if (user) {
+        document.getElementById("paddingSmartphone").className = "shadow-lg p-4 mb-4 bg-white";
         const Monster = Moralis.Object.extend("USER_IPFS");
         const query = new Moralis.Query(Monster);
-        document.getElementById("scritta_logout").style.display = "none";
+        //document.getElementById("scritta_logout").style.display = "none";
 
         query.equalTo("address", user.get("ethAddress"));
 
