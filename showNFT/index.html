@@ -3,48 +3,56 @@
     <!-- Moralis SDK code -->
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
-    <script src="main.js"></script>
+    <style>
+        td{
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
   </head>
   <body>
     <h1>NFT gallery</h1>
+    <p>Inserisci indirizzo</p>
+    <input type="text" id="address">
+      <button onclick="getNFTs()">Cerca</button>
+    <p id="wallet"></p>
+    <p id = "result"></p>
 
 
     <script>
-        // connect to Moralis server
 
         const serverUrl = "https://9vtzpc9iazka.usemoralis.com:2053/server";
         const appId = "MV8q6Pmrk0siAvHHE2YseAr93Ed9JeMkG6nunTAK";
         Moralis.start({ serverUrl, appId });
 
         async function getNFTs(){
-            // get polygon NFTs for address
-            const options = { chain: "eth", address: "0x683BFB1a245939843E8aa160cBC8C1d01E0F18d5" };
+            var ad = document.getElementById("address").value;
+            document.getElementById("wallet").innerHTML = "Address wallet: " + ad;
+            const options = { address: ad };
             const nfts = await Moralis.Web3.getNFTs(options);
             console.log(nfts);
 
-            nfts.forEach(function(nft){
-                let url = fixURL(nft.token_uri);
+            var table = "<table>";
+            table += "<tr><td>Address NFT</td><td>Type</td><td>Amount</td><td>Name</td><td>Id</td></tr>";
 
-                fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    $("#content").html($("content").html() + "<h2>" + data.name + "<h2>");
-                    $("#content").html($("content").html() + "<h3>" + data.description + "<h3>");
-                    $("#content").html($("content").html() + "<img width = 100 height = 100 src='" + data.image + "'>");
-                })
+            nfts.forEach(function(nft){
+
+                table += "<tr>";
+                table += "<td>" + nft.token_address + "</td>";
+                table += "<td>" + nft.contract_type + "</td>";
+                table += "<td>" + nft.amount + "</td>";
+                table += "<td>" + nft.name + "</td>";
+                table += "<td>" + nft.token_id + "</td>";
+                table += "</tr>";
 
             });
+
+            table += "</table>";
+
+            document.getElementById("result").innerHTML = table;
         }
 
-        function fixURL(url){
-            if(url.startsWith("ipfs")){
-                return "https://ipfs.moralis.io:2053/ipfs/" + url.split("ipfs://ipfs/");
-            } else {
-                return url + "?format=json";
-            }
-        }
-
-        getNFTs();
+        
 
 
     </script>

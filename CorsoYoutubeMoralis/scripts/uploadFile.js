@@ -150,6 +150,7 @@ async function checkIfExist(){
     }
 }
     
+
 uploadAll = async () => {
     const fileInput = document.getElementById("image");
 
@@ -164,7 +165,7 @@ uploadAll = async () => {
         
         var timer = setInterval(function (){
             var rap = 1 / (filesize + 10) * 100;
-            console.log("rap: " + rap);
+            //console.log("rap: " + rap);
         
             percentuale += rap;
             console.log("percentuale: " + percentuale);
@@ -174,19 +175,12 @@ uploadAll = async () => {
 
         try{
             const image = await uploadImage();
-        
             await uploadMetadata(image);
         } catch (error){
             console.log(error);
             window.clearInterval(timer);
         }
             
-            
-            //window.clearInterval(timer);
-        
-
-        
-
     } else {
         changeValue("result", "Devi compilare tutti i campi!!");
     }
