@@ -1,5 +1,6 @@
 let user = Moralis.User.current();
 if (!user) window.location.replace("../index.html"); 
+let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
         
@@ -74,7 +75,11 @@ async function check(){
     let user = Moralis.User.current();
 
     var address = user.get("ethAddress");
-    var newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
+    var newAddress = "";
+    if(isMobile)
+        newAddress = address.substring(0,5) + ".." + address.substring(address.length - 4, address.length);
+    else
+        newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
             
     changeValue("address", newAddress);
 
