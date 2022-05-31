@@ -82,6 +82,7 @@ async function check(){
         newAddress = address.substring(0,4) + ".." + address.substring(address.length - 3, address.length);
             
     changeValue("address", newAddress);
+    document.getElementById("addressUser").title = address;
 
     const Monster = Moralis.Object.extend("USER_PHOTO");
     const query = new Moralis.Query(Monster);

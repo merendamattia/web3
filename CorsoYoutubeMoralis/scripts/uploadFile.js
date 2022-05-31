@@ -41,7 +41,7 @@ function checkUploadSpeed( iterations, update ) {
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
-function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
+function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash, folder){
     let user = Moralis.User.current();
 
     const Monster = Moralis.Object.extend("USER_IPFS");
@@ -54,6 +54,7 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     monster.set("ImgDescription", imgDescription);
     monster.set("ImgHash", imgHash);
     monster.set("fileType", fileType);
+    monster.set("folder", folder);
     monster.setACL(new Moralis.ACL(Moralis.User.current()));
 
     monster.save().then(
@@ -84,6 +85,7 @@ uploadMetadata = async (imageHash) => {
     const nameImg = document.getElementById("nameImg").value;
     const description = document.getElementById("description").value;
     const fileType = document.getElementById("fileType").value;
+    const folder = document.getElementById("folder").value;
 
     const metadata = {
         "name": nameImg, 
@@ -105,7 +107,7 @@ uploadMetadata = async (imageHash) => {
 
     console.log(file.ipfs(), file.hash());
     
-    addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash());
+    addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash(), folder);
 
     var res = "File caricato! Aggiornare la pagina";
     // var res = "<br>IPFS: <a href = '" + file.ipfs() + "' target = '_blank'>link</a>";

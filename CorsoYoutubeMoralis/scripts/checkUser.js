@@ -153,7 +153,7 @@ let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 console.log("smartphone: " + isMobile);
 
 checkUser();
-
+let user = Moralis.User.current();
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
 /**
@@ -167,7 +167,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
 
     if(user){
         if(isMobile) hasUploadedFilesMobile(user);
-        else hasUploadedFiles(user);
+        else hasUploadedFiles("null");
 
         showLoggedContent(user);
 
@@ -182,20 +182,65 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
     
 }
 
-async function hasUploadedFiles(user) {
+async function printFolders(folder){
+    var str = "";
+    const Monster = Moralis.Object.extend("USER_FOLDERS");
+    const query = new Moralis.Query(Monster);
+ 
+    query.equalTo("address", user.get("ethAddress")).equalTo("folder_parent", folder);
+
+    const results = await query.descending("updatedAt").find();
+
+    if(results.length !== 0) {
+        str += "<table class='table'><thead>";
+        str += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
+        str += "<th scope='col'>Ultima modifica</th>";
+        str += "<th scope='col'>Tipo</th>";
+
+        //table += "<th scope='col'>Json</th>";
+        str += "</tr></thead><tbody>";
+
+        for (let i = 0; i < results.length; i++) {
+            const object = results[i];
+            str += `<tr onClick=openFolder('${object.id}')><th scope='row'><a style = 'color: black;'>` + (i + 1) + `</a></th>`;
+                          
+            str += "<td>" + object.get("folder_name") + "</td>";
+
+            str += "<td>" + object.get("updatedAt").toString().substring(0, 25) + "</td>";
+
+            str += "<td>cartella</td>";
+                        
+            str += `<td><a href='#' onClick=removeItem('${object.id}')>❌</a></td>`;
+
+            str += "</tr>";  
+            
+        }
+    }
+    str += "</tbody></table><br>";
+    return str;
+}
+
+function openFolder(id){
+    hasUploadedFiles(id);
+}
+
+async function hasUploadedFiles(folder) {
+    let user = Moralis.User.current();
     if (user) {
         const Monster = Moralis.Object.extend("USER_IPFS");
         const query = new Moralis.Query(Monster);
 
-        query.equalTo("address", user.get("ethAddress"));
+        query.equalTo("address", user.get("ethAddress")).equalTo("folder", folder);
 
         const results = await query.descending("updatedAt").find();
-
+        var table = "";
+        table += (await printFolders(folder)).toString();
+        
         if(results.length !== 0) {
             document.getElementById("IPFS_content").style.display = "block";
             document.getElementById("filterDiv").style.display = "block";
 
-            var table = getFirstRow();
+            table += getFirstRow();
 
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
@@ -210,10 +255,12 @@ async function hasUploadedFiles(user) {
                 
                 table += populateTable(object, i);
             }
+
             table += "</tbody></table><br>";
-            changeValue("getRecords", table);
+            
         }
-        else document.getElementById("IPFS_content").style.display = "none";
+        //else document.getElementById("IPFS_content").style.display = "none";
+        changeValue("getRecords", table);
     } 
     else alert("Metamask not connected!!");
 }
