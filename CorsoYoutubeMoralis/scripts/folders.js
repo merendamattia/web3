@@ -20,12 +20,7 @@ function createFolder(){
     );
 }
 
-function openFolder(id){
-    hasUploadedFiles(id);
-}
-
 async function getFolders(){
-    var str = "";
     const Monster = Moralis.Object.extend("USER_FOLDERS");
     const query = new Moralis.Query(Monster);
  

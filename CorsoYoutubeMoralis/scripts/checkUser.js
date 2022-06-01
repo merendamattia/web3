@@ -112,6 +112,9 @@ function populateTableMobile(object, i){
     return table;
 }
 
+let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+console.log("smartphone: " + isMobile);
+
 // ------------------------------------- LOGGED
 function showLoggedContent(user){
     document.getElementById("login_button").style.display = "none";
@@ -149,8 +152,6 @@ function showNotLoggedContent(){
     document.getElementById("isNotSigned").style.display = "none";
 }
 
-let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
-console.log("smartphone: " + isMobile);
 
 checkUser();
 let user = Moralis.User.current();
@@ -163,11 +164,9 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
     let user = Moralis.User.current();
 
     document.getElementById("isNotSigned").style.display = "none";
-    //document.getElementById("filterDiv").style.display = "none";
 
     if(user){
-        if(isMobile) hasUploadedFilesMobile("null");
-        else hasUploadedFiles("null");
+        hasUploadedFiles("null");
 
         showLoggedContent(user);
 
@@ -179,32 +178,52 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
           
     } else 
         showNotLoggedContent();
-    
 }
 
 async function printFolders(folder){
     var str = "";
     const Monster = Moralis.Object.extend("USER_FOLDERS");
     const query = new Moralis.Query(Monster);
+    const query2 = new Moralis.Query(Monster);
+
+    console.log(folder);
  
     query.equalTo("address", user.get("ethAddress")).equalTo("folder_parent", folder);
 
     const results = await query.descending("updatedAt").find();
     
+    query2.equalTo("address", user.get("ethAddress")).equalTo("objectId", folder);
 
-    if(results.length !== 0) {
-        alert("gay");
-        str += '<h5><span class = "bg-lightorange">> Cartelle</span></h5>';
-        str += "<table class='table'><thead>";
-        str += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
-        str += "<th scope='col'>Ultima modifica</th>";
-        str += "<th scope='col'>Dimensione</th>";
+    const results2 = await query2.find();
 
-        //table += "<th scope='col'>Json</th>";
-        str += "</tr></thead><tbody>";
+    if(results.length !== 0 || results2.length !== 0) {
+        if(folder !== "null")
+                str += "<a onClick=openFolder('${parent_id}')><i> Torna indietro</i></a>";
+        
+        var parent_id = "";
+        
+        if(folder === "null")
+            parent_id = "null";
+        else 
+            parent_id = results2[0].get("folder_parent");
+            
+        str = str.replace("${parent_id}", parent_id);
+        
+        if(results.length !== 0){
+            str += '<h5><span class = "bg-lightorange">> Cartelle</span></h5>';
+            str += "<table class='table'><thead>";
+            str += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
+            str += "<th scope='col'>Ultima modifica</th>";
+    
+            if(!isMobile)
+                str += "<th scope='col'>Dimensione</th>";
 
+            str += "</tr></thead><tbody>";
+        }
+        
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
+
             str += `<tr class = '{bg-color}' onClick=openFolder('${object.id}')><th scope='row'><a style = 'color: black;'>` + (i + 1) + `</a></th>`;
                           
             if(i % 2 == 0) str = str.replace("{bg-color}", "bg-light");
@@ -213,34 +232,40 @@ async function printFolders(folder){
             str += "<td>" + object.get("folder_name") + "</td>";
 
             str += "<td>" + object.get("updatedAt").toString().substring(0, 15) + "</td>";
-
-            str += "<td>TODO</td>";
+            
+            if(!isMobile)
+                str += "<td>TODO</td>";
                         
             str += `<td><a href='#' onClick=removeItem('${object.id}')>❌</a></td>`;
 
             str += "</tr>";  
             
         }
+        str += "</tbody></table><br>";
     }
-    str += "</tbody></table><br>";
+    
     return str;
 }
 
 function openFolder(id){
-    if(isMobile) hasUploadedFilesMobile(id);
-    else hasUploadedFiles(id);
+    hasUploadedFiles(id);
 }
 
 async function hasUploadedFiles(folder) {
     let user = Moralis.User.current();
+    
     if (user) {
         const Monster = Moralis.Object.extend("USER_IPFS");
         const query = new Moralis.Query(Monster);
+        
+        if(isMobile)
+            document.getElementById("paddingSmartphone").className = "shadow-lg p-4 mb-4 bg-white";
 
         query.equalTo("address", user.get("ethAddress")).equalTo("folder", folder);
 
         const results = await query.descending("updatedAt").find();
         var table = "";
+        var popup = "";
         table += (await printFolders(folder)).toString();
         
         if(results.length !== 0) {
@@ -248,70 +273,29 @@ async function hasUploadedFiles(folder) {
             document.getElementById("filterDiv").style.display = "block";
             table += "<h5><span class = 'bg-lightorange'>> File</span></h5>";
 
-            table += getFirstRow();
+            if(isMobile)
+                table += getFirstRowMobile();
+            else 
+                table += getFirstRow();
 
             for (let i = 0; i < results.length; i++) {
                 const object = results[i];
-
-                let url = getLinkIpfs(object.get("hash_ipfs"));
             
-                fetch(url).then(response => response.json()).then(data => {
-                    //console.log(data);
-                    
-                    //document.getElementById("result").innerHTML += data.name + "<br>";
-                });
-                
-                table += populateTable(object, i);
+                if(isMobile){
+                    popup += popUpMobile(object, i);
+                    table += populateTableMobile(object, i);
+                }
+                else 
+                    table += populateTable(object, i);
             }
 
-            table += "</tbody></table><br>";
-            
+            table += "</tbody></table>";
         }
-        //else document.getElementById("IPFS_content").style.display = "none";
         changeValue("getRecords", table);
-    } 
-    else alert("Metamask not connected!!");
-}
-
-async function hasUploadedFilesMobile(folder) {
-    let user = Moralis.User.current();
-    if (user) {
-        document.getElementById("paddingSmartphone").className = "shadow-lg p-4 mb-4 bg-white";
-
-        const Monster = Moralis.Object.extend("USER_IPFS");
-        const query = new Moralis.Query(Monster);
-        //document.getElementById("scritta_logout").style.display = "none";
-
-        query.equalTo("address", user.get("ethAddress")).equalTo("folder", folder);
-
-        const results = await query.descending("updatedAt").find();
-
-        var table = "";
-        table += (await printFolders(folder)).toString();
-
-        if(results.length !== 0) {
-            document.getElementById("IPFS_content").style.display = "block";
-            
-            table += "<h5><span class = 'bg-lightorange'>> File</span></h5>";
-            
-            table += getFirstRowMobile();
-
-            var popup;
-
-            for (let i = 0; i < results.length; i++) {
-                const object = results[i];
-
-                popup += popUpMobile(object, i);
-                
-                table += populateTableMobile(object, i);
-
-            }
-            table += "</tbody></table><br>";
-            
-            changeValue("getRecords", table);
+        
+        if(isMobile)
             changeValue("popup", popup);
-        }
-        else document.getElementById("IPFS_content").style.display = "none";
     } 
-    else alert("Metamask not connected!!");
+    else 
+        alert("Metamask not connected!!");
 }
