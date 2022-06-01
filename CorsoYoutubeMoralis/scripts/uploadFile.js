@@ -85,7 +85,7 @@ uploadMetadata = async (imageHash) => {
     const nameImg = document.getElementById("nameImg").value;
     const description = document.getElementById("description").value;
     const fileType = document.getElementById("fileType").value;
-    const folder = document.getElementById("folder").value;
+    const folder = document.getElementById("folder2").value;
 
     const metadata = {
         "name": nameImg, 

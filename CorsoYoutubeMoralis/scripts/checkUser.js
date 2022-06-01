@@ -166,7 +166,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
     //document.getElementById("filterDiv").style.display = "none";
 
     if(user){
-        if(isMobile) hasUploadedFilesMobile(user);
+        if(isMobile) hasUploadedFilesMobile("null");
         else hasUploadedFiles("null");
 
         showLoggedContent(user);
@@ -190,25 +190,31 @@ async function printFolders(folder){
     query.equalTo("address", user.get("ethAddress")).equalTo("folder_parent", folder);
 
     const results = await query.descending("updatedAt").find();
+    
 
     if(results.length !== 0) {
+        alert("gay");
+        str += '<h5><span class = "bg-lightorange">> Cartelle</span></h5>';
         str += "<table class='table'><thead>";
         str += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
         str += "<th scope='col'>Ultima modifica</th>";
-        str += "<th scope='col'>Tipo</th>";
+        str += "<th scope='col'>Dimensione</th>";
 
         //table += "<th scope='col'>Json</th>";
         str += "</tr></thead><tbody>";
 
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
-            str += `<tr onClick=openFolder('${object.id}')><th scope='row'><a style = 'color: black;'>` + (i + 1) + `</a></th>`;
+            str += `<tr class = '{bg-color}' onClick=openFolder('${object.id}')><th scope='row'><a style = 'color: black;'>` + (i + 1) + `</a></th>`;
                           
+            if(i % 2 == 0) str = str.replace("{bg-color}", "bg-light");
+            else str = str.replace("{bg-color}", "bg-white");
+
             str += "<td>" + object.get("folder_name") + "</td>";
 
-            str += "<td>" + object.get("updatedAt").toString().substring(0, 25) + "</td>";
+            str += "<td>" + object.get("updatedAt").toString().substring(0, 15) + "</td>";
 
-            str += "<td>cartella</td>";
+            str += "<td>TODO</td>";
                         
             str += `<td><a href='#' onClick=removeItem('${object.id}')>❌</a></td>`;
 
@@ -221,7 +227,8 @@ async function printFolders(folder){
 }
 
 function openFolder(id){
-    hasUploadedFiles(id);
+    if(isMobile) hasUploadedFilesMobile(id);
+    else hasUploadedFiles(id);
 }
 
 async function hasUploadedFiles(folder) {
@@ -239,6 +246,7 @@ async function hasUploadedFiles(folder) {
         if(results.length !== 0) {
             document.getElementById("IPFS_content").style.display = "block";
             document.getElementById("filterDiv").style.display = "block";
+            table += "<h5><span class = 'bg-lightorange'>> File</span></h5>";
 
             table += getFirstRow();
 
@@ -265,21 +273,28 @@ async function hasUploadedFiles(folder) {
     else alert("Metamask not connected!!");
 }
 
-async function hasUploadedFilesMobile(user) {
+async function hasUploadedFilesMobile(folder) {
+    let user = Moralis.User.current();
     if (user) {
         document.getElementById("paddingSmartphone").className = "shadow-lg p-4 mb-4 bg-white";
+
         const Monster = Moralis.Object.extend("USER_IPFS");
         const query = new Moralis.Query(Monster);
         //document.getElementById("scritta_logout").style.display = "none";
 
-        query.equalTo("address", user.get("ethAddress"));
+        query.equalTo("address", user.get("ethAddress")).equalTo("folder", folder);
 
         const results = await query.descending("updatedAt").find();
 
+        var table = "";
+        table += (await printFolders(folder)).toString();
+
         if(results.length !== 0) {
             document.getElementById("IPFS_content").style.display = "block";
-
-            var table = getFirstRowMobile();
+            
+            table += "<h5><span class = 'bg-lightorange'>> File</span></h5>";
+            
+            table += getFirstRowMobile();
 
             var popup;
 
