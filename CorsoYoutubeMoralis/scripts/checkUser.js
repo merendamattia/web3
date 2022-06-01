@@ -152,7 +152,6 @@ function showNotLoggedContent(){
     document.getElementById("isNotSigned").style.display = "none";
 }
 
-
 checkUser();
 let user = Moralis.User.current();
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
@@ -198,7 +197,7 @@ async function printFolders(folder){
 
     if(results.length !== 0 || results2.length !== 0) {
         if(folder !== "null")
-                str += "<a onClick=openFolder('${parent_id}')><i> Torna indietro</i></a>";
+                str += "<a style='color: #0d6efd; cursor: pointer;' onClick=openFolder('${parent_id}')><i class='bi bi-arrow-90deg-left'></i><i> Torna indietro</i></a><br><br>";
         
         var parent_id = "";
         
@@ -224,7 +223,7 @@ async function printFolders(folder){
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
 
-            str += `<tr class = '{bg-color}' onClick=openFolder('${object.id}')><th scope='row'><a style = 'color: black;'>` + (i + 1) + `</a></th>`;
+            str += `<tr style = "cursor: pointer;" class = '{bg-color}' onClick=openFolder('${object.id}')><th scope='row'><a style = 'color: black;'>` + (i + 1) + `</a></th>`;
                           
             if(i % 2 == 0) str = str.replace("{bg-color}", "bg-light");
             else str = str.replace("{bg-color}", "bg-white");
@@ -234,14 +233,14 @@ async function printFolders(folder){
             str += "<td>" + object.get("updatedAt").toString().substring(0, 15) + "</td>";
             
             if(!isMobile)
-                str += "<td>TODO</td>";
+                str += "<td>To-Do</td>";
                         
-            str += `<td><a href='#' onClick=removeItem('${object.id}')>❌</a></td>`;
+            str += `<td><a href='#' onClick=removeFolder('${object.id}')>❌</a></td>`;
 
             str += "</tr>";  
             
         }
-        str += "</tbody></table><br>";
+        str += "</tbody></table>";
     }
     
     return str;
