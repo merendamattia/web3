@@ -1,4 +1,5 @@
 // ------------------------------------- DESKTOP
+/*
 function getFirstRow(){
     var table = "<table class='table'><thead>";
     table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
@@ -114,7 +115,7 @@ function populateTableMobile(object, i){
     
     return table;
 }
-
+*/
 // ------------------------------------- MAIN
 async function filter(){
     const Monster = Moralis.Object.extend("USER_IPFS");

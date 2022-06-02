@@ -1,9 +1,12 @@
 let user = Moralis.User.current();
+
+// ------------------------------------- Verifica dispositivo user
 if (!user) window.location.replace("../index.html"); 
 let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
-        
+ 
+// ------------------------------------- Upload immagine
 async function uploadImg() {
     const image = document.getElementById("imageProfile");
     //const username = document.getElementById("username").value;
@@ -36,6 +39,7 @@ function uploadImage(){
     uploadImg(); 
 }
 
+// ------------------------------------- Upload username
 async function uploadUser() {
     const username = document.getElementById("username").value;
     //const username = document.getElementById("username").value;
@@ -64,6 +68,7 @@ function uploadUsername(){
     uploadUser(); 
 }
 
+// ------------------------------------- Dato un hash, ritorna il link https
 function getLinkIpfs(hash){
     var url = "https://gateway.moralisipfs.com/ipfs/" + hash;
     return url;
@@ -71,6 +76,7 @@ function getLinkIpfs(hash){
 
 check();
 
+// ------------------------------------- MAIN
 async function check(){
     let user = Moralis.User.current();
 
@@ -134,4 +140,3 @@ async function check(){
     }
     
 }
-

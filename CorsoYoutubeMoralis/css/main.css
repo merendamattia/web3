@@ -29,9 +29,7 @@
   .mobile{width: 100%;}
 }
 
-a {
-    text-decoration: none;
-}
+a { text-decoration: none; }
 
 .bg-yellow{ background-color: yellow; }
 
@@ -39,6 +37,9 @@ a {
 
 .bg-lightblue{ background-color: #d3ede8; }
 
+.c-black{ color: black;}
+
+/* Stile per immagine profilo cropped */
 .profile-img{
   object-fit: cover; 
   width: 100px; 
