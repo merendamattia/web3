@@ -208,7 +208,7 @@ async function printFolders(folder){
 
     if(results.length !== 0 || results2.length !== 0) {
         if(folder !== "null")
-                str += "<a style='color: #0d6efd; cursor: pointer;' onClick=openFolder('${parent_id}')><i class='bi bi-arrow-90deg-left'></i><i> Torna indietro</i></a><br><br>";
+            //str += "<a style='color: #0d6efd; cursor: pointer;' onClick=openFolder('${parent_id}')><i class='bi bi-arrow-90deg-left'></i><i> Torna indietro</i></a><br><br>";
         
         var parent_id = "";
         
@@ -262,6 +262,36 @@ function openFolder(id){
     hasUploadedFiles(id);
 }
 
+async function getDirectoryFolders(folder, path){
+    if(folder !== "null"){
+        const Monster = Moralis.Object.extend("USER_FOLDERS");
+        const query = new Moralis.Query(Monster);
+ 
+        query.equalTo("objectId", folder);
+
+        const results = await query.find();
+
+        if(results.length !== 0){
+            const object = results[0];
+        
+            var link = "<i><a style='text-decoration: underline;' onClick=openFolder('" + object.id + "')>" + object.get("folder_name") + "</a></i>";
+
+            path = " > " + link + path;
+
+            getDirectoryFolders(object.get("folder_parent"), path);
+        }
+    }
+    else {        
+        var link = "<a onClick=openFolder('null')>Home</a>";
+        path = link + path;
+        if(path !== "<a onClick=openFolder('null')>Home</a>")
+            changeValue("directoryFiles", path);
+        else 
+            changeValue("directoryFiles", "");
+    }
+    
+}
+
 // ------------------------------------- MAIN
 async function hasUploadedFiles(folder) {
     let user = Moralis.User.current();
@@ -274,6 +304,8 @@ async function hasUploadedFiles(folder) {
             document.getElementById("paddingSmartphone").className = "shadow-lg p-4 mb-4 bg-white";
 
         query.equalTo("address", user.get("ethAddress")).equalTo("folder", folder);
+
+        getDirectoryFolders(folder, "");
 
         const results = await query.descending("updatedAt").find();
         var table = "";

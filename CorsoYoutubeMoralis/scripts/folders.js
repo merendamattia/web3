@@ -36,7 +36,7 @@ async function moveFile(){
     monster.set("folder", newFolder);
     monster.save().then(
         (monster) => {
-            alert("File spostato correttamente!! 🥳");
+            //alert("File spostato correttamente!! 🥳");
             location.reload();
         },
         (error) => {
