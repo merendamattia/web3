@@ -262,6 +262,7 @@ function openFolder(id){
     hasUploadedFiles(id);
 }
 
+// ------------------------------------- Stampa a video la directory attuale delle cartelle
 async function getDirectoryFolders(folder, path){
     if(folder !== "null"){
         const Monster = Moralis.Object.extend("USER_FOLDERS");
@@ -274,7 +275,7 @@ async function getDirectoryFolders(folder, path){
         if(results.length !== 0){
             const object = results[0];
         
-            var link = "<i><a style='text-decoration: underline;' onClick=openFolder('" + object.id + "')>" + object.get("folder_name") + "</a></i>";
+            var link = "<i><a style='text-decoration: underline; cursor: pointer;' onClick=openFolder('" + object.id + "')>" + object.get("folder_name") + "</a></i>";
 
             path = " > " + link + path;
 
@@ -282,9 +283,9 @@ async function getDirectoryFolders(folder, path){
         }
     }
     else {        
-        var link = "<a onClick=openFolder('null')>Home</a>";
+        var link = "<a style='cursor: pointer;' onClick=openFolder('null')>Home</a>";
         path = link + path;
-        if(path !== "<a onClick=openFolder('null')>Home</a>")
+        if(path !== "<a style='cursor: pointer;' onClick=openFolder('null')>Home</a>")
             changeValue("directoryFiles", path);
         else 
             changeValue("directoryFiles", "");
