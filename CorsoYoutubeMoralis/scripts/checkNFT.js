@@ -9,7 +9,7 @@ async function verifyNFT(){
 
     const nfts = await Moralis.Web3.getNFTs(options);
 
-    console.log(nfts);
+    console.log("NFT posseduti da user:", nfts);
 
     //const addressNFT = "0x64b6b4142d4d78e49d53430c1d3939f2317f9085"; // address NFT a caso
     const addressNFT = "xxx";

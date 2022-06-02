@@ -54,7 +54,7 @@ function populateTable(object, i){
 
 function saveObjectId(id){
     localStorage.setItem("objID", id);
-    console.log("obj", localStorage.getItem("objID"));
+    console.log("objID file selezionato per lo spostamento:", localStorage.getItem("objID"));
 }
 
 // ------------------------------------- MOBILE
@@ -62,7 +62,7 @@ function getFirstRowMobile(){
     var table = "<table class='table'><thead>";
     table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
     table += "<th scope='col'>Tipo</th>";
-    table += "<th scope='col'>Uploaded</th>";
+    table += "<th scope='col'>Ultima modifica</th>";
     //table += "<th scope='col'>Share</th>";
     table += "</tr></thead><tbody>";
     return table;
@@ -87,9 +87,9 @@ function popUpMobile(object, i){
     else 
         popup += "<span class = 'bg-lightorange'>Visualizza file:</span> <a href = '" + linkImg + "' target = '_blank'>link</a>";
 
-    popup += `<br><a type='button' class='' data-bs-toggle='modal' data-bs-target='#spostaCartella' onclick = saveObjectId('${object.id}') ><span class = 'bg-lightorange c-black'>Sposta file:</span> <i class='bi bi-box-arrow-in-up-right'></i></a>`;
+    popup += `<br><a type='button' data-bs-toggle='modal' data-bs-target='#spostaCartella' onclick = saveObjectId('${object.id}')><span class = 'bg-lightorange c-black'>Sposta file:</span> <i class='bi bi-box-arrow-in-up-right'></i></a>`;
 
-    popup += `<br><a href='#' onClick=removeItem('${object.id}')><button class="btn btn-outline-danger w-100 rounded mx-auto d-block" >❌ Elimina file</button></a>`;
+    popup += `<br><br><a href='#' onClick=removeItem('${object.id}')><button class="btn btn-outline-danger w-100 rounded mx-auto d-block" >❌ Elimina file</button></a>`;
                 
     popup += '</div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div></div></div></div>';
 
@@ -182,7 +182,7 @@ function changeValue(id, value) { document.getElementById(id).innerHTML = value;
         try{
             getProfileData(user);
         } catch(error){
-            console.log(error);
+            //console.log(error);
         }
           
     } else 
@@ -196,7 +196,7 @@ async function printFolders(folder){
     const query = new Moralis.Query(Monster);
     const query2 = new Moralis.Query(Monster);
 
-    console.log(folder);
+    console.log("folderID:", folder);
  
     query.equalTo("address", user.get("ethAddress")).equalTo("folder_parent", folder);
 

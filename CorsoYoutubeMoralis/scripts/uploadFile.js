@@ -156,7 +156,7 @@ document.getElementById("upload").onclick = uploadAll;
 
 var percentuale = 0;
 var filesize = 0;
-console.log("filesize: " + filesize);
+console.log("upload filesize: " + filesize);
 
 document.getElementById("image").onchange = () => {
     filesize = document.getElementById("image").files[0].size / 1000000;  //QUESTA MERDA è IN KILOBYTE
