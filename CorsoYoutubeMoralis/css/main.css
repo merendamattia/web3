@@ -38,3 +38,10 @@ a {
 .bg-lightorange{ background-color: #fedbd3; }
 
 .bg-lightblue{ background-color: #d3ede8; }
+
+.profile-img{
+  object-fit: cover; 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50px;
+}

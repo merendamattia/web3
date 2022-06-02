@@ -23,7 +23,7 @@ async function getProfileData(user){
 
     if(object.get("image_hash") !== 'undefined'){
         var linkImg = getLinkIpfs(object.get("image_hash"));
-        ris += "<img style = 'width: 100px; height: 100px; border-radius: 50px;' src = '" + linkImg + "' alt='Foto profilo'>";
+        ris += "<img class = 'profile-img' src = '" + linkImg + "' alt='Foto profilo'>";
     }
     
     if(object.get("username") !== 'undefined')
