@@ -283,9 +283,9 @@ async function getDirectoryFolders(folder, path){
         }
     }
     else {        
-        var link = "<a style='cursor: pointer;' onClick=openFolder('null')>Home</a>";
+        var link = "<br><a style='cursor: pointer;' onClick=openFolder('null')>Home</a>";
         path = link + path;
-        if(path !== "<a style='cursor: pointer;' onClick=openFolder('null')>Home</a>")
+        if(path !== "<br><a style='cursor: pointer;' onClick=openFolder('null')>Home</a>")
             changeValue("directoryFiles", path);
         else 
             changeValue("directoryFiles", "");

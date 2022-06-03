@@ -236,7 +236,7 @@ function mostraFiltri() {
     showFilter = !showFilter;
 
     if(showFilter){
-        document.getElementById("mostrFiltriId").innerHTML="Nascondi Filtri";
+        document.getElementById("mostrFiltriId").innerHTML="<i class='bi bi-x-lg'></i> Nascondi Filtri";
         let filterForm = ` <br> <div class="col-2 mx-auto"> <form> <div class="row"> <div class="col"> <select class="form-select w-20" id="filterSelect" aria-label="Filtre per tipo"> <option value="" selected disabled>Tipo</option> <option value="Immagine">Immagine</option> <option value="Video">Video</option> <option value="Audio">Audio</option> <option value="Testo">Testo</option> <option value="Zip">.Zip</option> <option value="Altro">Altro</option> </select> </div> <div class="col"> <input class="form-control w-20" type="date" id="dateFilter" name="dateFilter" required> </div> </div> <br> <div class="row"> <div class="col"> <input class="form-control w-20" type="text" id="nameFilter" name="nameFilter" placeholder="Nome" required> </div> <div class="col text-center"> <button class="btn btn-outline-secondary" style="width: 48%;" type="button" onclick="filter()">Filtra</button> <button class="btn btn-outline-danger" style="width: 48%;" type="button" onclick="location.reload()">Reset</button> </div> </div> </form> </div>`;
         
         //TODO
@@ -249,7 +249,7 @@ function mostraFiltri() {
         changeValue("filterDiv", filterForm);
     }
     else{
-        document.getElementById("mostrFiltriId").innerHTML="Mostra Filtri";
+        document.getElementById("mostrFiltriId").innerHTML="<i class='bi bi-filter'></i> Mostra Filtri";
         document.getElementById("filterDiv").style.display = "none";
         changeValue("filterDiv", "");
     }
