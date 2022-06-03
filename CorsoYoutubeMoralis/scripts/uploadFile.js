@@ -1,12 +1,12 @@
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
 // ------------------------------------- Inserimento dati nel database
-function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash, folder){
+function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash, folder) {
     let user = Moralis.User.current();
 
     const Monster = Moralis.Object.extend("USER_IPFS");
     const monster = new Monster();
-            
+
     monster.set("address", user.get("ethAddress"));
     monster.set("link_ipfs", link);
     monster.set("hash_ipfs", hash);
@@ -50,8 +50,8 @@ uploadMetadata = async (imageHash) => {
     const folder = document.getElementById("folder2").value;
 
     const metadata = {
-        "name": nameImg, 
-        "description": description, 
+        "name": nameImg,
+        "description": description,
         "type": fileType,
         //"file": "https://gateway.moralisipfs.com/ipfs/" + imageHash
         "file": imageHash
@@ -68,7 +68,7 @@ uploadMetadata = async (imageHash) => {
     await file.saveIPFS();
 
     console.log(file.ipfs(), file.hash());
-    
+
     addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash(), folder);
 
     var res = "File caricato! Aggiornare la pagina";
@@ -79,7 +79,7 @@ uploadMetadata = async (imageHash) => {
 }
 
 // ------------------------------------- Verifica se un utente ha già caricato file
-async function checkIfExist(){
+async function checkIfExist() {
     const data = image.files[0];
     const file = new Moralis.File(data.name, data);
     await file.saveIPFS();
@@ -92,18 +92,18 @@ async function checkIfExist(){
     query.equalTo("address", user.get("ethAddress"));
 
     const results = await query.find();
-        //alert(results.length);
+    //alert(results.length);
 
-    if(results.length === 0) {
-    
+    if (results.length === 0) {
+
         const monster = new Monster();
-                    
-        monster.set("address", user.get("ethAddress"));   
+
+        monster.set("address", user.get("ethAddress"));
         monster.setACL(new Moralis.ACL(Moralis.User.current()));
 
         monster.save().then(
             (monster) => {
-                    // Execute any logic that should take place after the object is saved.
+                // Execute any logic that should take place after the object is saved.
                 console.log("Account aggiunto a USER_PHOTO");
             },
             (error) => {
@@ -114,7 +114,7 @@ async function checkIfExist(){
         console.log("Account già presente in USER_PHOTO");
     }
 }
-    
+
 // ------------------------------------- MAIN
 uploadAll = async () => {
     const fileInput = document.getElementById("image");
@@ -124,32 +124,32 @@ uploadAll = async () => {
     const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
     const bar = "<div class='progress'><div id = 'bar' style = 'width: 0%;' class = 'progress-bar progress-bar-striped bg-warning' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div></div>";
 
-    if(fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== ""){
-        
+    if (fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== "") {
+
         changeValue("result", bar);
-        
-        var timer = setInterval(function (){
+
+        var timer = setInterval(function () {
             var rap = 1 / (filesize + 10) * 100;
             //console.log("rap: " + rap);
-        
+
             percentuale += rap;
             console.log("percentuale: " + percentuale);
-            
+
             document.getElementById("bar").style.width = percentuale + "%";
         }, 1000);
 
-        try{
+        try {
             const image = await uploadImage();
             await uploadMetadata(image);
-        } catch (error){
+        } catch (error) {
             console.log(error);
             window.clearInterval(timer);
         }
-            
+
     } else {
         changeValue("result", "Devi compilare tutti i campi!!");
     }
-    
+
 }
 
 document.getElementById("upload").onclick = uploadAll;
@@ -161,5 +161,5 @@ console.log("upload filesize: " + filesize);
 document.getElementById("image").onchange = () => {
     filesize = document.getElementById("image").files[0].size / 1000000;  //QUESTA MERDA è IN KILOBYTE
     console.log("filesize: " + filesize + " MB");
-   //alert((filesize / 1000) + "MB");
+    //alert((filesize / 1000) + "MB");
 }

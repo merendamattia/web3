@@ -1,8 +1,8 @@
 // Crea una nuova cartella
-function createFolder(){
+function createFolder() {
     const Monster = Moralis.Object.extend("USER_FOLDERS");
     const monster = new Monster();
-            
+
     monster.set("address", user.get("ethAddress"));
     monster.set("folder_name", document.getElementById("folder-name").value);
     monster.set("folder_parent", document.getElementById("folder1").value);
@@ -22,14 +22,14 @@ function createFolder(){
 }
 
 // Sposta il file in un'altra cartella
-async function moveFile(){
+async function moveFile() {
     const objId = localStorage.getItem("objID");
     const newFolder = document.getElementById("folder3").value;
 
     const MonsterCreature = Moralis.Object.extend('USER_IPFS');
     const query = new Moralis.Query(MonsterCreature);
 
-    query.equalTo("objectId", objId);  
+    query.equalTo("objectId", objId);
 
     const monster = await query.first();
 
@@ -45,10 +45,10 @@ async function moveFile(){
 }
 
 // Stampa a video tutte le cartelle create
-async function getFolders(){
+async function getFolders() {
     const Monster = Moralis.Object.extend("USER_FOLDERS");
     const query = new Moralis.Query(Monster);
- 
+
     query.equalTo("address", user.get("ethAddress"));
 
     const results = await query.descending("updatedAt").find();
@@ -56,34 +56,34 @@ async function getFolders(){
     var select2 = document.getElementById('folder2');
     var select3 = document.getElementById('folder3');
 
-    if(results.length !== 0) {
+    if (results.length !== 0) {
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
-            
+
             var opt = document.createElement('option');
             opt.value = object.id;
             opt.innerHTML = object.get("folder_name");
-            
+
             select1.appendChild(opt);
         }
 
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
-            
+
             var opt = document.createElement('option');
             opt.value = object.id;
             opt.innerHTML = object.get("folder_name");
-            
+
             select2.appendChild(opt);
         }
 
         for (let i = 0; i < results.length; i++) {
             const object = results[i];
-            
+
             var opt = document.createElement('option');
             opt.value = object.id;
             opt.innerHTML = object.get("folder_name");
-            
+
             select3.appendChild(opt);
         }
     }

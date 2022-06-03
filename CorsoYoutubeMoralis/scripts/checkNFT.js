@@ -1,4 +1,4 @@
-async function verifyNFT(){
+async function verifyNFT() {
     let user = Moralis.User.current();
     //document.getElementById("checkNFT").title = "NFT check...";
 
@@ -16,20 +16,20 @@ async function verifyNFT(){
 
     var verify = false;
 
-    nfts.forEach(function(nft){
-        if(addressNFT === nft.token_address) verify = true;
+    nfts.forEach(function (nft) {
+        if (addressNFT === nft.token_address) verify = true;
         console.log(verify, addressNFT, nft.token_address);
     });
 
-    if(verify === true){
+    if (verify === true) {
         document.getElementById("checkNFT").innerHTML = "✅ NFT";
         document.getElementById("checkNFT").title = "🔥 NFT verified!";
-    } 
-    else{
+    }
+    else {
         document.getElementById("checkNFT").innerHTML = "❌ NFT";
         document.getElementById("checkNFT").title = "NFT not found!";
     }
-        
+
 }
 
 $(function () {

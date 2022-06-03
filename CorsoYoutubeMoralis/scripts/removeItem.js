@@ -8,7 +8,7 @@ async function removeItem(objId) {
     var nomeFile = object.get("ImgName");
 
     var conf = confirm("Sei sicuro di voler eliminare '" + nomeFile + "'? 🤔");
-    
+
     if (object && conf) {
         object.destroy().then(() => {
             alert("'" + nomeFile + "' è stato eliminato ❌");
@@ -35,11 +35,11 @@ async function removeFolder(objId) {
 
     var conf = confirm("Sei sicuro di voler eliminare la cartella '" + nomeFile + "'? 🤔");
     var conf2 = confirm("ATTENZIONE!! Se elimini la cartella, eliminerai anche tutti i files presenti al suo interno. Confermare eliminazione?");
-    
+
     if (object && conf && conf2) {
         object.destroy().then(() => {
             alert("Cartella eliminata ❌");
-            
+
             location.reload();
         }, (error) => {
             console.log(error);
