@@ -2,3 +2,25 @@
 Guide/login/.DS_Store
 *.png
 *.mov
+CorsoYoutubeMoralis/pages/test.html
+.gitignore
+nft.psd
+moralis-mutants-nft-engine-main/index.js
+moralis-mutants-nft-engine-main/LICENSE
+moralis-mutants-nft-engine-main/Moralis Mutants.psd
+moralis-mutants-nft-engine-main/NFTContract.sol
+moralis-mutants-nft-engine-main/package.json
+moralis-mutants-nft-engine-main/README.md
+moralis-mutants-nft-engine-main/input/config.js
+moralis-mutants-nft-engine-main/input/bocca/original/nft_0000s_0000_Neutro.jpg
+moralis-mutants-nft-engine-main/input/bocca/original/nft_0000s_0001_Sad.jpg
+moralis-mutants-nft-engine-main/input/bocca/original/nft_0000s_0002_Lingua di fuori.jpg
+moralis-mutants-nft-engine-main/input/body/original/nft_0002s_0000_Corpo.jpg
+moralis-mutants-nft-engine-main/input/occhi/original/nft_0001s_0000_Raggi.jpg
+moralis-mutants-nft-engine-main/input/occhi/original/nft_0001s_0001_Occhiali.jpg
+moralis-mutants-nft-engine-main/input/occhi/original/nft_0001s_0002_Stelline.jpg
+moralis-mutants-nft-engine-main/src/canvas.js
+moralis-mutants-nft-engine-main/src/dna.js
+moralis-mutants-nft-engine-main/src/filesystem.js
+moralis-mutants-nft-engine-main/src/metadata.js
+moralis-mutants-nft-engine-main/src/rarity.js

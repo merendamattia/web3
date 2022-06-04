@@ -23,25 +23,30 @@
     <div id="particles-js"></div>
     <main class="container">
       <div class="shadow-lg p-5 mb-5 bg-white" style="border-radius: 20px;">
-        <nav class="navbar" id = "logged">
+        <nav class="navbar navbar-expand-lg navbar-dark" id = "logged">
           <div class="container-fluid">
-            <a style = "color: black;" href = "index.html" class="navbar-brand"> </a>
-            <form class="d-flex" role="search">
-              <a style = "color: black;" class="navbar-brand"><img src="../images/ethereum.png" style="margin-bottom: 5px; height: 25px;"> <span id = "address"></span></a>
-              
-              <button id="logout_button" class="btn btn-outline-danger w-20" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 20 19">
-                  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                </svg>
-                Logout
-              </button>
-  
-            </form>
+            <a style = "color: black;" class="navbar-brand"><h1>Profilo</h1></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-list" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav ms-auto" style = "text-align: center;">              	
+                  <a style = "color: black;" id ="addressUser" class="navbar-brand" data-bs-toggle="tooltip" title="" rel="tooltip" data-bs-placement="bottom"><img src="../images/ethereum.png" style="margin-bottom: 5px; height: 25px;"> <span id = "address"></span></a>
+                  <button id="logout_button" class="btn btn-outline-danger w-20" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 20 19">
+                      <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                      <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                    </svg>
+                    <span id = "scritta_logout">Logout</span>
+                  </button>
+              </div>
+            </div>
           </div>
         </nav>
 
-        <h1 id = "title">Profilo</h1>
+        
         <div class="text-center">
           <span id = "profileData"></span>
         </div>
@@ -53,14 +58,14 @@
         <div class = "col-2 mx-auto">
             <label class="form-label">Username</label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="..." id="username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" onclick="uploadUsername()">Aggiorna username</button>
+                <input type="text" class="form-control" placeholder="..." id="username" aria-label="Username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" onclick="uploadUsername()">Aggiorna</button>
             </div>
 
             <label class="form-label">Immagine profilo</label>
             <div class="input-group">
-                <input type="file" class="form-control" id="imageProfile" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                <button class="btn btn-outline-secondary" type="button" onclick="uploadImage()">Aggiorna immagine</button>
+                <input type="file" class="form-control" id="imageProfile" aria-describedby="inputGroupFileAddon04" aria-label="Image">
+                <button class="btn btn-outline-secondary" type="button" onclick="uploadImage()">Aggiorna</button>
             </div>
 
         </div>

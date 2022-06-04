@@ -1,4 +1,5 @@
 // ------------------------------------- DESKTOP
+/*
 function getFirstRow(){
     var table = "<table class='table'><thead>";
     table += "<tr><th scope='col'>#</th><th scope='col'>Nome</th>";
@@ -114,13 +115,13 @@ function populateTableMobile(object, i){
     
     return table;
 }
-
+*/
 // ------------------------------------- MAIN
-async function filter(){
+async function filter() {
     const Monster = Moralis.Object.extend("USER_IPFS");
     const query = new Moralis.Query(Monster);
     let user = Moralis.User.current();
-    
+
     const tipo = document.getElementById("filterSelect").value;
     const date = document.getElementById("dateFilter").value;
     const nome = document.getElementById("nameFilter").value.toLowerCase();
@@ -133,21 +134,21 @@ async function filter(){
 
     const results = await query.descending("updatedAt").find();
 
-    if(results.length !== 0) {
+    if (results.length !== 0) {
         document.getElementById("IPFS_content").style.display = "block";
-            
+
         var table = "";
         var popup = "";
         var count = 0;
 
         for (let i = 0; i < results.length; i++) {
-            
+
             const object = results[i];
             var verify = false;
             var dateVerify = false;
             var tipoVerify = false;
             var nomeVerify = false;
-            
+
             // Data di upload e data selezionata da utente
             let when = object.get("updatedAt");
             let now = new Date(date);
@@ -155,75 +156,75 @@ async function filter(){
             now = now.toString().substring(0, 15);
 
             // Verifica se sono stati inseriti i parametri di ricerca
-            if(date !== '') dateVerify = true;
-            if(tipo !== '') tipoVerify = true; 
-            if(nome !== '') nomeVerify = true; 
+            if (date !== '') dateVerify = true;
+            if (tipo !== '') tipoVerify = true;
+            if (nome !== '') nomeVerify = true;
 
             // RICARICA LA PAGINA SE NESSUN FILTRO è STATO SELEZIONATO
-            if(!dateVerify && !tipoVerify && !nomeVerify) location.reload();
+            if (!dateVerify && !tipoVerify && !nomeVerify) location.reload();
 
             // TUTTI I FILTRI SELEZIONATI
-            if(dateVerify && tipoVerify && nomeVerify){
-                if(when === now && object.get("fileType") === tipo && object.get("ImgName").toLowerCase().includes(nome))
+            if (dateVerify && tipoVerify && nomeVerify) {
+                if (when === now && object.get("fileType") === tipo && object.get("ImgName").toLowerCase().includes(nome))
                     verify = true;
             }
             // SOLO DATA E TIPO SELEZIONATI
-            else if(dateVerify && tipoVerify){
-                if(object.get("fileType") === tipo && when === now )
+            else if (dateVerify && tipoVerify) {
+                if (object.get("fileType") === tipo && when === now)
                     verify = true;
             }
             // SOLO DATA E NOME SELEZIONATI
-            else if(dateVerify && nomeVerify){
-                if(when === now && object.get("ImgName").toLowerCase().includes(nome))
+            else if (dateVerify && nomeVerify) {
+                if (when === now && object.get("ImgName").toLowerCase().includes(nome))
                     verify = true;
             }
             // SOLO TIPO E NOME SELEZIONATI
-            else if(tipoVerify && nomeVerify){
-                if(object.get("fileType") === tipo && object.get("ImgName").includes(nome))
+            else if (tipoVerify && nomeVerify) {
+                if (object.get("fileType") === tipo && object.get("ImgName").includes(nome))
                     verify = true;
             }
             // UN SOLO FILTRO SELEZIONATO
             else {
-                if(dateVerify && when === now)
-                        verify = true;
-                if(tipoVerify && object.get("fileType") === tipo)
-                        verify = true;      
-                if(nomeVerify && object.get("ImgName").toLowerCase().includes(nome))
-                        verify = true;
+                if (dateVerify && when === now)
+                    verify = true;
+                if (tipoVerify && object.get("fileType") === tipo)
+                    verify = true;
+                if (nomeVerify && object.get("ImgName").toLowerCase().includes(nome))
+                    verify = true;
             }
 
             // Inizio selezione
-            if(!isMobile){
+            if (!isMobile) {
                 //Desktop
-                if(i == 0)
+                if (i == 0)
                     table += getFirstRow();
-  
-                if(verify) {
+
+                if (verify) {
                     table += populateTable(object, count);
                     count++;
                 }
 
             } else {
                 //Mobile
-                if(i == 0)
+                if (i == 0)
                     table += getFirstRowMobile();
 
-                if(verify){
+                if (verify) {
                     table += populateTableMobile(object, count);
                     popup += popUpMobile(object, count);
                     count++;
-                } 
+                }
             }
         }
 
-        if(count != 0){
+        if (count != 0) {
             table += "</tbody></table><br>";
             changeValue("getRecords", table);
             changeValue("popup", popup);
         } else
             alert("Nessun risultato trovato! 😔");
-        
-    } 
+
+    }
     else
         alert("Nessun risultato trovato! 😔");
 }
@@ -234,21 +235,21 @@ function mostraFiltri() {
 
     showFilter = !showFilter;
 
-    if(showFilter){
-        document.getElementById("mostrFiltriId").innerHTML="Nascondi Filtri";
+    if (showFilter) {
+        document.getElementById("mostrFiltriId").innerHTML = "<i class='bi bi-x-lg'></i> Nascondi Filtri";
         let filterForm = ` <br> <div class="col-2 mx-auto"> <form> <div class="row"> <div class="col"> <select class="form-select w-20" id="filterSelect" aria-label="Filtre per tipo"> <option value="" selected disabled>Tipo</option> <option value="Immagine">Immagine</option> <option value="Video">Video</option> <option value="Audio">Audio</option> <option value="Testo">Testo</option> <option value="Zip">.Zip</option> <option value="Altro">Altro</option> </select> </div> <div class="col"> <input class="form-control w-20" type="date" id="dateFilter" name="dateFilter" required> </div> </div> <br> <div class="row"> <div class="col"> <input class="form-control w-20" type="text" id="nameFilter" name="nameFilter" placeholder="Nome" required> </div> <div class="col text-center"> <button class="btn btn-outline-secondary" style="width: 48%;" type="button" onclick="filter()">Filtra</button> <button class="btn btn-outline-danger" style="width: 48%;" type="button" onclick="location.reload()">Reset</button> </div> </div> </form> </div>`;
-        
+
         //TODO
         //TABELLA CON PULSANTE PER 
         //SETTARE IL NUMERO MASSIMO
         //DI ELEMENTI VISTI A SCHERMO
         //let filterForm = ` <br> <div class="col-2 mx-auto"> <form> <div class="row"> <div class="col"> <select class="form-select w-20" id="filterSelect" aria-label="Filtre per tipo"> <option value="" selected disabled>Tipo</option> <option value="Immagine">Immagine</option> <option value="Video">Video</option> <option value="Audio">Audio</option> <option value="Testo">Testo</option> <option value="Zip">.Zip</option> <option value="Altro">Altro</option> </select> </div> <div class="col"> <input class="form-control w-20" type="date" id="dateFilter" name="dateFilter" required> </div> </div> <br> <div class="row"> <div class="col"> <input class="form-control w-20" type="text" id="nameFilter" name="nameFilter" placeholder="Nome" required> </div>  <div class="col"><input class="form-control w-20" type="number" id="maxElementFilter" name="maxElementFilter" placeholder="Max elementi" value = "15"> </div></div><div class="row"><div class="col text-center"> <button class="btn btn-outline-secondary" style="width: 48%;" type="button" onclick="filter()">Filtra</button> <button class="btn btn-outline-danger" style="width: 48%;" type="button" onclick="location.reload()">Reset</button></div></div></form></div>`;
-        
+
         document.getElementById("filterDiv").style.display = "block";
         changeValue("filterDiv", filterForm);
     }
-    else{
-        document.getElementById("mostrFiltriId").innerHTML="Mostra Filtri";
+    else {
+        document.getElementById("mostrFiltriId").innerHTML = "<i class='bi bi-filter'></i> Mostra Filtri";
         document.getElementById("filterDiv").style.display = "none";
         changeValue("filterDiv", "");
     }

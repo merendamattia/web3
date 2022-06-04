@@ -1,52 +1,12 @@
-function checkUploadSpeed( iterations, update ) {
-    var average = 0,
-        index = 0,
-        timer = window.setInterval( check, 1000 ); //check every 5 seconds
-    check();
-    
-    function check() {
-        var xhr = new XMLHttpRequest(),
-            url = '?cache=' + Math.floor( Math.random() * 10000 ), //prevent url cache
-            data = getRandomString( 1 ), //1 meg POST size handled by all servers
-            startTime,
-            speed = 0;
-        xhr.onreadystatechange = function ( event ) {
-            if( xhr.readyState == 4 ) {
-                speed = Math.round( 1024 / ( ( new Date() - startTime ) / 1000 ) );
-                average == 0 
-                    ? average = speed 
-                    : average = Math.round( ( average + speed ) / 2 );
-                update( speed, average );
-                index++;
-                if( index == iterations ) {
-                    window.clearInterval( timer );
-                };
-            };
-        };
-        xhr.open( 'POST', url, true );
-        startTime = new Date();
-        xhr.send( data );
-    };
-    
-    function getRandomString( sizeInMb ) {
-        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_+`-=[]\{}|;':,./<>?", //random data prevents gzip effect
-            iterations = sizeInMb * 1024 * 1024, //get byte count
-            result = '';
-        for( var index = 0; index < iterations; index++ ) {
-            result += chars.charAt( Math.floor( Math.random() * chars.length ) );
-        };     
-        return result;
-    };
-};
-
 function changeValue(id, value) { document.getElementById(id).innerHTML = value; }
 
-function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
+// ------------------------------------- Inserimento dati nel database
+function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash, folder) {
     let user = Moralis.User.current();
 
     const Monster = Moralis.Object.extend("USER_IPFS");
     const monster = new Monster();
-            
+
     monster.set("address", user.get("ethAddress"));
     monster.set("link_ipfs", link);
     monster.set("hash_ipfs", hash);
@@ -54,6 +14,7 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     monster.set("ImgDescription", imgDescription);
     monster.set("ImgHash", imgHash);
     monster.set("fileType", fileType);
+    monster.set("folder", folder);
     monster.setACL(new Moralis.ACL(Moralis.User.current()));
 
     monster.save().then(
@@ -68,6 +29,7 @@ function addLinkToDB(imgName, imgDescription, fileType, imgHash, link, hash){
     );
 }
 
+// ------------------------------------- Upload file
 uploadImage = async () => {
     const nameImg = document.getElementById("nameImg").value;
     const fileInput = document.getElementById("image");
@@ -80,14 +42,16 @@ uploadImage = async () => {
     return file.hash();
 }
 
+// ------------------------------------- Upload metadata
 uploadMetadata = async (imageHash) => {
     const nameImg = document.getElementById("nameImg").value;
     const description = document.getElementById("description").value;
     const fileType = document.getElementById("fileType").value;
+    const folder = document.getElementById("folder2").value;
 
     const metadata = {
-        "name": nameImg, 
-        "description": description, 
+        "name": nameImg,
+        "description": description,
         "type": fileType,
         //"file": "https://gateway.moralisipfs.com/ipfs/" + imageHash
         "file": imageHash
@@ -104,8 +68,8 @@ uploadMetadata = async (imageHash) => {
     await file.saveIPFS();
 
     console.log(file.ipfs(), file.hash());
-    
-    addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash());
+
+    addLinkToDB(nameImg, description, fileType, imageHash, file.ipfs(), file.hash(), folder);
 
     var res = "File caricato! Aggiornare la pagina";
     // var res = "<br>IPFS: <a href = '" + file.ipfs() + "' target = '_blank'>link</a>";
@@ -114,7 +78,8 @@ uploadMetadata = async (imageHash) => {
     changeValue("result", res);
 }
 
-async function checkIfExist(){
+// ------------------------------------- Verifica se un utente ha già caricato file
+async function checkIfExist() {
     const data = image.files[0];
     const file = new Moralis.File(data.name, data);
     await file.saveIPFS();
@@ -127,18 +92,18 @@ async function checkIfExist(){
     query.equalTo("address", user.get("ethAddress"));
 
     const results = await query.find();
-        //alert(results.length);
+    //alert(results.length);
 
-    if(results.length === 0) {
-    
+    if (results.length === 0) {
+
         const monster = new Monster();
-                    
-        monster.set("address", user.get("ethAddress"));   
+
+        monster.set("address", user.get("ethAddress"));
         monster.setACL(new Moralis.ACL(Moralis.User.current()));
 
         monster.save().then(
             (monster) => {
-                    // Execute any logic that should take place after the object is saved.
+                // Execute any logic that should take place after the object is saved.
                 console.log("Account aggiunto a USER_PHOTO");
             },
             (error) => {
@@ -149,8 +114,8 @@ async function checkIfExist(){
         console.log("Account già presente in USER_PHOTO");
     }
 }
-    
 
+// ------------------------------------- MAIN
 uploadAll = async () => {
     const fileInput = document.getElementById("image");
 
@@ -159,42 +124,42 @@ uploadAll = async () => {
     const loadGif = "<div class='spinner-border text-warning' role=status'><span class='visually-hidden'>Loading...</span></div>";
     const bar = "<div class='progress'><div id = 'bar' style = 'width: 0%;' class = 'progress-bar progress-bar-striped bg-warning' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div></div>";
 
-    if(fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== ""){
-        
+    if (fileInput.files.length != 0 && document.getElementById("fileType").value !== "Tipo" && document.getElementById("nameImg").value !== "") {
+
         changeValue("result", bar);
-        
-        var timer = setInterval(function (){
+
+        var timer = setInterval(function () {
             var rap = 1 / (filesize + 10) * 100;
             //console.log("rap: " + rap);
-        
+
             percentuale += rap;
             console.log("percentuale: " + percentuale);
-            
+
             document.getElementById("bar").style.width = percentuale + "%";
         }, 1000);
 
-        try{
+        try {
             const image = await uploadImage();
             await uploadMetadata(image);
-        } catch (error){
+        } catch (error) {
             console.log(error);
             window.clearInterval(timer);
         }
-            
+
     } else {
         changeValue("result", "Devi compilare tutti i campi!!");
     }
-    
+
 }
 
 document.getElementById("upload").onclick = uploadAll;
 
 var percentuale = 0;
 var filesize = 0;
-console.log("filesize: " + filesize);
+console.log("upload filesize: " + filesize);
 
 document.getElementById("image").onchange = () => {
     filesize = document.getElementById("image").files[0].size / 1000000;  //QUESTA MERDA è IN KILOBYTE
     console.log("filesize: " + filesize + " MB");
-   //alert((filesize / 1000) + "MB");
+    //alert((filesize / 1000) + "MB");
 }

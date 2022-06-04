@@ -3,20 +3,20 @@ logIn = async () => {
     let user = Moralis.User.current();
     if (!user) {
         // controllo se l'utente è connesso dal cellulare o pc
-        if(typeof screen.orientation === 'undefined'){
+        if (typeof screen.orientation === 'undefined') {
             // cellulare
-            const user = await Moralis.authenticate({ 
-                provider: "walletconnect", 
+            const user = await Moralis.authenticate({
+                provider: "walletconnect",
                 signingMessage: "Login - Portale archiviazione dati su IPFS by merendamattia.com (mobile version)",
                 mobileLinks: [
-                  "rainbow",
-                  "metamask",
-                  "argent",
-                  "trust",
-                  "imtoken",
-                  "pillar",
-                ] 
-            }).then(function (user){
+                    "rainbow",
+                    "metamask",
+                    "argent",
+                    "trust",
+                    "imtoken",
+                    "pillar",
+                ]
+            }).then(function (user) {
                 checkUser();
                 //location.reload();
             }).catch(function (error) {
@@ -37,7 +37,7 @@ logIn = async () => {
                   "imtoken",
                   "pillar",
                 ]*/
-            }).then(function (user){
+            }).then(function (user) {
                 checkUser();
                 //location.reload();
             }).catch(function (error) {
@@ -52,20 +52,20 @@ logInWC = async () => {
     let user = Moralis.User.current();
     if (!user) {
         // controllo se l'utente è connesso dal cellulare o pc
-        if(typeof screen.orientation === 'undefined'){
+        if (typeof screen.orientation === 'undefined') {
             // cellulare
-            const user = await Moralis.authenticate({ 
-                provider: "walletconnect", 
+            const user = await Moralis.authenticate({
+                provider: "walletconnect",
                 signingMessage: "Login - Portale archiviazione dati su IPFS by merendamattia.com (mobile version)",
                 mobileLinks: [
-                  "rainbow",
-                  "metamask",
-                  "argent",
-                  "trust",
-                  "imtoken",
-                  "pillar",
-                ] 
-            }).then(function (user){
+                    "rainbow",
+                    "metamask",
+                    "argent",
+                    "trust",
+                    "imtoken",
+                    "pillar",
+                ]
+            }).then(function (user) {
                 checkUser();
                 //location.reload();
             }).catch(function (error) {
@@ -74,18 +74,18 @@ logInWC = async () => {
             });
         } else {
             // computer
-            const user = await Moralis.authenticate({ 
-                provider: "walletconnect", 
+            const user = await Moralis.authenticate({
+                provider: "walletconnect",
                 signingMessage: "Login - Portale archiviazione dati su IPFS by merendamattia.com (desktop version)",
                 mobileLinks: [
-                  "rainbow",
-                  "metamask",
-                  "argent",
-                  "trust",
-                  "imtoken",
-                  "pillar",
-                ] 
-            }).then(function (user){
+                    "rainbow",
+                    "metamask",
+                    "argent",
+                    "trust",
+                    "imtoken",
+                    "pillar",
+                ]
+            }).then(function (user) {
                 checkUser();
                 //location.reload();
             }).catch(function (error) {

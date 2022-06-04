@@ -1,40 +1,81 @@
 .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-  }
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
 
 @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
-    #logout_button{
-      width: 100%;
-    }
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+
+  #logout_button {
+    width: 100%;
+  }
 }
 
 /* For mobile: */
 
 @media only screen and (min-width: 1280px) {
-  .col-2.mx-auto {width: 50%;}
-  #login_button, #login_wc {width: 30%;}   /*  Pulsanti login     */
-  #mostrFiltriId {width: 15%;}
+  .col-2.mx-auto {
+    width: 50%;
+  }
+
+  #login_button,
+  #login_wc {
+    width: 30%;
+  }
+
+  /*  Pulsanti login     */
+  #mostrFiltriId {
+    width: 15%;
+  }
 }
 
 @media only screen and (max-width: 1279px) {
-  .col-2.mx-auto {width: 100%;}               /*  Form upload file   */
-  #login_button, #login_wc, #mostrFiltriId {width: 100%;}     /*  Pulsanti login     */
-  .mobile{width: 100%;}
+  .col-2.mx-auto {
+    width: 100%;
+  }
+
+  /*  Form upload file   */
+  #login_button,
+  #login_wc,
+  #mostrFiltriId {
+    width: 100%;
+  }
+
+  /*  Pulsanti login     */
+  .mobile {
+    width: 100%;
+  }
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-.bg-yellow{ background-color: yellow; }
+.bg-yellow {
+  background-color: yellow;
+}
 
-.bg-lightorange{ background-color: #fedbd3; }
+.bg-lightorange {
+  background-color: #fedbd3;
+}
 
-.bg-lightblue{ background-color: #d3ede8; }
+.bg-lightblue {
+  background-color: #d3ede8;
+}
+
+.c-black {
+  color: black;
+}
+
+/* Stile per immagine profilo cropped */
+.profile-img {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
