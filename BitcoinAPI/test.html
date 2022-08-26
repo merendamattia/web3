@@ -1,0 +1,68 @@
+<html>
+    <body>
+        <h1>Crypto Data</h1>
+        <p>Total Market Cap: <span id = "marketcap"></span></p>
+        <p>BTC dominance: <span id = "btcdominance"></span></p>
+        <p>ETH dominance: <span id = "ethdominance"></span></p>
+        <p>BTC price: <span id = "btcprice"></span></p>
+        <p>ETH price: <span id = "ethprice"></span></p>
+        <p>Ultimo aggiornamento: <span id = "lastupdate"></span></p>
+        
+    </body>
+    <script>
+        
+        function getPercentage(other){
+            other = other.toString();
+            return other.substring(0, other.indexOf('.') + 3) + "%";
+        }
+
+        function getTotalMarketCapTrillion(other){
+            var trillion = 1000000000000;   // 1 trillion
+            other = parseInt(other) / trillion;
+            other = other.toString();
+            return other.substring(0, other.indexOf('.') + 3) + "T";
+        }
+
+        function getDate(other){
+            other = new Date(other);
+            return other.getHours() + ":" + other.getMinutes() + ":" + other.getSeconds()
+        }
+
+        var apikey = {
+            key:'cf86214d-b2d2-4b4b-bc9b-a8044a72d6ca'
+        }
+        
+        // richiesta GET.
+        fetch('https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest?CMC_PRO_API_KEY=' + apikey.key)
+            // gestisci il successo
+            .then(response => response.json())  // converti a json
+            .then(json => {
+                
+                document.getElementById("marketcap").innerHTML = getTotalMarketCapTrillion(json.data.quote.USD.total_market_cap);
+                document.getElementById("btcdominance").innerHTML = getPercentage(json.data.btc_dominance);
+                document.getElementById("ethdominance").innerHTML = getPercentage(json.data.eth_dominance);
+                document.getElementById("lastupdate").innerHTML = getDate(json.status.timestamp);
+                
+
+                console.log(json)
+            })    // stampa i dati sulla console
+            .catch(err => console.log('Request Failed', err)); // gestisci gli errori
+
+        
+        // richiesta GET.
+        fetch('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/historical?CMC_PRO_API_KEY=' + apikey.key)
+            // gestisci il successo
+            .then(response => response.json())  // converti a json
+            .then(json => {
+                
+                // document.getElementById("marketcap").innerHTML = getTotalMarketCapTrillion(json.data.quote.USD.total_market_cap);
+                // document.getElementById("btcdominance").innerHTML = getPercentage(json.data.btc_dominance);
+                // document.getElementById("ethdominance").innerHTML = getPercentage(json.data.eth_dominance);
+                // document.getElementById("lastupdate").innerHTML = getDate(json.status.timestamp);
+                
+
+                console.log(json)
+            })    // stampa i dati sulla console
+            .catch(err => console.log('Request Failed', err)); // gestisci gli errori
+    </script>
+</html>
