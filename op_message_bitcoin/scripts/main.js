@@ -47,7 +47,6 @@ function getTimestamp(y){
 
 // Crea e popola una tabella contenente i dati di una transazione
 function makeTable(y){
-    console.log(y.search("error"));
     if(y.search("error") == -1){
         var table = "<table><tr>";
         table += ("<td>" + hex_to_text(y) + "</td>");
@@ -111,6 +110,6 @@ function main(){
 }
 
 let explorer = "https://blockchain.info/rawtx/";
-let hash_txt = "hash.txt";
+let hash_txt = "../txt/hash.txt";
 getLatestBlock();
 main();
