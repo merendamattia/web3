@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
+    <head>
+      <link rel="stylesheet" href="style.css">
+    </head>
     <body>
 
-        <h1>Test</h1>
-        <p id="test"></p>
-        <p id="demo"></p>
+      <h1>Tool per visualizzare messaggi presenti in una transazione Bitcoin</h1>
 
-        <script src="main.js"> </script>
+        <table>
+          <tr>
+            <th>Message</th>
+            <th>Conferme</th>
+            <th>Block</th>
+            <th>Timestamp</th>
+            <th>Hash TX</th>
+          </tr>
+        </table>
+
+        <p id="demo"></p>
+        
+        <input type="text" name="enter" placeholder="Insert hash.." id="hashUser"/>
+        <input type="button" value="Search" OnClick="searchHash()"/>
 
     </body>
+    <script src="main.js"></script>
 </html>
